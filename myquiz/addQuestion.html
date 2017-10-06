@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
+	<title>Add Question</title>
+    <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />
+	<link rel='stylesheet' 
+		   type='text/css' 
+		   media='only screen and (min-width: 530px) and (min-device-width: 481px)'
+		   href='stylesPWS/wide.css' />
+	<link rel='stylesheet' 
+		   type='text/css' 
+		   media='only screen and (max-width: 480px)'
+		   href='stylesPWS/smartphone.css' />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script>
+		$("#bidali").click(function(){
+			console.log("Bidali funtzioan");
+			var posta = $("#posta").val();
+			var test = $("#testua").val();
+			var eZuzen = $("#eZuzen").val();
+			var eOker1 = $("#eOker1").val();
+			var eOker2 = $("#eOker2").val();
+			var eOker3 = $("#eOker3").val();
+			var zail = $("#zailtasun").val();
+			var gaia = $("#gaiarloa").val();
+			//var irudi;
+			var errorea = "Derrigorrezko eremuren bat betetzea falta zaizu";
+			var postaER = "[a-z]{2,}[0-9]{3}@ikasle.ehu.(eus || es)";
+			if(($.trim(posta).lenght == 0) || ($.trim(test).lenght == 0) || ($.trim(eZuzen).lenght == 0) || ($.trim(eOker1).lenght == 0) || ($.trim(eOker2).lenght == 0) || ($.trim(eOker3).lenght == 0) || ($.trim(zail).lenght == 0) || ($.trim(gaia).lenght == 0)){
+				alert(errorea);
+			}
+			if(posta != postaER)
+				alert("Ez duzu sartu baliozko posta");
+			if(zail != [1-5])
+				alert("Zailtasuna 1-tik 5-ra izan behar du");
+			
+		});
+  </script>
+  </head>
+  <body>
+		<form id="galderaF">
+			<p>Posta:</p>
+			<input type="text" id="posta"/>
+			<p>Galderaren testua:</p>
+			<input type="text" id="testua"/>
+			<p>Erantzun zuzen bat</p>
+			<input type="text" id="eZuzen"/>
+			<p>Erantzun okerra bat</p>
+			<input type="text" id="eOker1"/>
+			<p>Beste erantzun oker bat</p>
+			<input type="text" id="eOker2"/>
+			<p>Beste erantzun oker bat</p>
+			<input type="text" id="eOker3"/>
+			<p>Galderaren zaitasuna</p>
+			<input type="text" id="zailtasun"/>
+			<p>Galderaren gai-arloa</p>
+			<input type="text" id="gaiarloa"/>
+			<!--<p>Galderaren irudia</p>
+			<input type=""></input> -->
+			<input type="button" id="reset" value="Reset"/>
+			<input type="button" id="bidali" value="Bidali"/>
+		</form>
+  </body>
+ </html>
