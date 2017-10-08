@@ -78,6 +78,26 @@
 			$("#eOker3").val("");
 			$("#zailtasun").val("");
 			$("#gaiarloa").val("");
+			$("#ikusiarg").removeAttr("src");
+		});
+		
+		/* Irudia kargatzen bada erakutsi pantailan */
+		$("#argazkia").change(function(e){
+			console.log("argazkia aldatu da.");
+			var img = e.target.files[0], imageType = /image.*/;
+			if (!img.type.match(imageType))
+				return false;
+			var reader = new FileReader();
+			reader.onload = fileOnload;
+			reader.readAsDataURL(img);
+			
+			function fileOnload(e) {
+				var result=e.target.result;
+				$("#ikusiarg").attr("src",result);
+			}
+			
+			$(".argazkia").append("<p> Hautatutako argazkia: </p> </br>");
+			//$("#reset").prepend("<img src='" + img + "' width='300px'>");
 		});
 	});
 	
@@ -86,7 +106,7 @@
   <body>
 		<form id="galderaF" name="galderenF" action="proba.php" method="post">
 			<p>Posta:</p>
-			<input type="text" id="posta"/>
+			<input type="email" id="posta"/>
 			<p>Galderaren testua:</p>
 			<input type="text" id="testua"/>
 			<p>Erantzun zuzen bat</p>
@@ -104,7 +124,8 @@
 			<p class="argazkia"><label for="argazkia"> Galderaren irudia: </label>
 			<input type="file" id="argazkia" name="argazkia"/>
 			</p>
-			</br>
+			<img id="ikusiarg" src="" width="300px">
+			<br>
 			<input type="reset" value="Reset">
 			<input type="submit" id="bidali" value="Bidali"/>
 			<a href="layout.html">
