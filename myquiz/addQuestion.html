@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
+	<title>Add Question</title>
+    <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />
+	<link rel='stylesheet' 
+		   type='text/css' 
+		   media='only screen and (min-width: 530px) and (min-device-width: 481px)'
+		   href='stylesPWS/wide.css' />
+	<link rel='stylesheet' 
+		   type='text/css' 
+		   media='only screen and (max-width: 480px)'
+		   href='stylesPWS/smartphone.css' />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script>
+	$(document).ready(function(){
+		
+		$("#bidali").click(function(){
+
+			console.log("Bidali funtzioan");
+			var posta = $("#posta").val();
+			var test = $("#testua").val();
+			var eZuzen = $("#eZuzen").val();
+			var eOker1 = $("#eOker1").val();
+			var eOker2 = $("#eOker2").val();
+			var eOker3 = $("#eOker3").val();
+			var zail = $("#zailtasun").val();
+			var gaia = $("#gaiarloa").val();
+			//var irudi;
+			var ondo= true;
+			var errorea = "Derrigorrezko eremuren bat betetzea falta zaizu";
+			var postaER = new RegExp("[a-z]{2,}[0-9]{3}@ikasle.ehu.(eus || es)");
+			if(posta.length == ("0") || test.length == ("0") || eZuzen.length == ("0") || eOker1.length == ("0") || eOker2.length == ("0") || eOker3.length == ("0") || zail.length == ("0") || gaia.length == ("0")){
+				alert(errorea);
+				ondo=false;
+			}
+			if(!postaER.test(posta))
+				alert("Ez duzu sartu baliozko posta");
+				ondo=false;
+
+			if((/[1-5]{2,}/).test(zail)||(/[06789]{1}/).test(zail)){
+				alert("Zailtasuna 1-tik 5-ra izan behar du");
+				ondo=false;
+
+			}
+			if(test.length<("10"))
+				alert("Galdera gutxienez 10 karaktere baino gehiago izan behar ditu");
+				ondo=false;
+			if(ondo)
+				alert("Emaitza bidali da");
+				
+		});
+	});
+	
+  </script>
+  </head>
+  <body>
+		<form id="galderaF" name=galderenF action=proba.php>
+			<p>Posta:</p>
+			<input type="text" id="posta"actio/>
+			<p>Galderaren testua:</p>
+			<input type="text" id="testua"/>
+			<p>Erantzun zuzen bat</p>
+			<input type="text" id="eZuzen"/>
+			<p>Erantzun okerra bat</p>
+			<input type="text" id="eOker1"/>
+			<p>Beste erantzun oker bat</p>
+			<input type="text" id="eOker2"/>
+			<p>Beste erantzun oker bat</p>
+			<input type="text" id="eOker3"/>
+			<p>Galderaren zaitasuna</p>
+			<input type="text" id="zailtasun"/>
+			<p>Galderaren gai-arloa</p>
+			<input type="text" id="gaiarloa"/>
+			<!--<p>Galderaren irudia</p>
+			<input type=""></input> -->
+			<input type="reset" value="Reset">
+			<input type="submit" id="bidali" value="Bidali"/>
+			<a href="layout.html">
+				<img src="https://image.flaticon.com/icons/png/512/2/2801.png" style="width:42px;height:42px;border:0;">
+			</a>
+		</form>
+  </body>
+ </html>
