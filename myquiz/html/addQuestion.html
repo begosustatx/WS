@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
+	<title>Add Question</title>
+    <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />
+	<link rel='stylesheet' 
+		   type='text/css' 
+		   media='only screen and (min-width: 530px) and (min-device-width: 481px)'
+		   href='stylesPWS/wide.css' />
+	<link rel='stylesheet' 
+		   type='text/css' 
+		   media='only screen and (max-width: 480px)'
+		   href='stylesPWS/smartphone.css' />
+  <script src="js/jquery.min.js"></script>
+  <script>
+	$(document).ready(function(){
+		
+		/* Formularioaren balidazioa egiten duen funtzioa. */
+		$("#bidali").click(function(){
+
+			console.log("Bidali funtzioan");
+			var posta = $("#posta").val();
+			var test = $("#testua").val();
+			var eZuzen = $("#eZuzen").val();
+			var eOker1 = $("#eOker1").val();
+			var eOker2 = $("#eOker2").val();
+			var eOker3 = $("#eOker3").val();
+			var zail = $("#zailtasun").val();
+			var gaia = $("#gaiarloa").val();
+			
+			var ondo= true;
+			var postaER = new RegExp("[a-z]{2,}[0-9]{3}@ikasle.ehu.(eus || es)");
+			/* Balioztatu eremu guztiak bete direla */
+			if(posta.length == ("0") || test.length == ("0") || eZuzen.length == ("0") || eOker1.length == ("0") || eOker2.length == ("0") || eOker3.length == ("0") || zail.length == ("0") || gaia.length == ("0")){
+				alert("Derrigorrezko eremuren bat betetzea falta zaizu");
+				ondo=false;
+			} else {
+				// Posta zuzena den balidatu (RegExp erabiliz)
+				if(!postaER.test(posta)){
+					alert("Ez duzu sartu baliozko posta");
+					console.log(posta);
+					ondo=false;
+				}
+				// Zailtasun maila zuzen bat sartu den edo ez begiratu (RegExp erabiliz)
+				if((/[1-5]/).test(zail)){
+					console.log("zailtasun zuzena");
+				}else {
+					console.log(zail);
+					alert("Zailtasuna 1-tik 5-ra izan behar du");
+					ondo=false;
+
+				}
+				// Galderaren testua 10-reko luzeera duen balidatu
+				if(test.length<("10")){
+						console.log(test);
+						alert("Galdera gutxienez 10 karaktere baino gehiago izan behar ditu");
+						ondo=false;
+				}
+			}
+			/* Dena ondo sartu bada */
+			if(ondo){
+				console.log("dena zuzen");
+				console.log("Bidaliko diren datuak: posta " + posta + " testua: " + test + " ezuzen " + eZuzen);
+				console.log(" oker1 " + eOker1 + " oker2 " + eOker2 + " oker3 " + eOker3 + " zailtasuna " + zail + " gai-arloa " + gaia);
+				alert("Emaitza bidali da.");
+			} else return false;
+				
+		});
+		
+		/* Reset botoia pultsatzerakoan input guztiak garbitzeko funtzioa. */
+		$("#reset").click(function(){
+			$("#posta").val("");
+			$("#testua").val("");
+			$("#eZuzen").val("");
+			$("#eOker1").val("");
+			$("#eOker2").val("");
+			$("#eOker3").val("");
+			$("#zailtasun").val("");
+			$("#gaiarloa").val("");
+		});
+	});
+	
+  </script>
+  </head>
+  <body>
+		<form id="galderaF" name="galderenF" action="php/addQuestion.php" method="POST">
+			<p>Posta:</p>
+			<input type="text" id="posta"/>
+			<p>Galderaren testua:</p>
+			<input type="text" id="testua"/>
+			<p>Erantzun zuzen bat</p>
+			<input type="text" id="eZuzen"/>
+			<p>Erantzun okerra bat</p>
+			<input type="text" id="eOker1"/>
+			<p>Beste erantzun oker bat</p>
+			<input type="text" id="eOker2"/>
+			<p>Beste erantzun oker bat</p>
+			<input type="text" id="eOker3"/>
+			<p>Galderaren zaitasuna</p>
+			<input type="text" id="zailtasun"/>
+			<p>Galderaren gai-arloa</p>
+			<input type="text" id="gaiarloa"/>
+			<p class="argazkia"><label for="argazkia"> Galderaren irudia: </label>
+			<input type="file" id="argazkia" name="argazkia"/>
+			</p>
+			</br>
+			<input type="reset" value="Reset">
+			<input type="submit" id="bidali" value="Bidali"/>
+			<a href="layout.html">
+				<img src="https://image.flaticon.com/icons/png/512/2/2801.png" style="width:42px;height:42px;border:0;">
+			</a>
+		</form>
+  </body>
+ </html>
