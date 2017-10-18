@@ -8,7 +8,7 @@
 	} else {
 		$server="localhost:3306";
 		$user="id2923223_apato001";
-		$pass="1234abc";
+		$pass="***";
 		$db="id2923223_quiz";
 	}
 	$link = mysqli_connect("localhost", "root", "", "quiz"); // Konexioa ireki
