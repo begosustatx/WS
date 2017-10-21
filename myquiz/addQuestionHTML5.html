@@ -3,22 +3,21 @@
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
 	<title>Add Question</title>
-    <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />
+    <link rel='stylesheet' type='text/css' href='../stylesPWS/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
 		   media='only screen and (min-width: 530px) and (min-device-width: 481px)'
-		   href='stylesPWS/wide.css' />
+		   href='../stylesPWS/wide.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
-		   href='stylesPWS/smartphone.css' />
+		   href='../stylesPWS/smartphone.css' />
   <script src="js/jquery.min.js"></script>
   <script>
 	$(document).ready(function(){
 		
 		/* Formularioaren balidazioa egiten duen funtzioa. */
 		$("#bidali").click(function(){
-
 			console.log("Bidali funtzioan");
 			var posta = $("#posta").val();
 			var test = $("#testua").val();
@@ -65,39 +64,37 @@
 				var result=e.target.result;
 				$("#ikusiarg").attr("src",result);
 			}
-			
-			$(".argazkia").append("<p> Hautatutako argazkia: </p> <br>");
 		});
 	});
 	
   </script>
   </head>
   <body>
-		<form id="galderaF" name="galderenF" action="proba.php" method="POST">
+		<form id="galderaF" name="galderenF" action="../php/addQuestionWithImage.php" method="post" enctype="multipart/form-data">
 			<p>Posta:</p>
-			<input type="email" name="posta" id="posta" pattern="[a-z]{2,}[0-9]{3}@ikasle.ehu.(eus || es)" placeholder="example@ikasle.ehu.es" autofocus required />
+			<input type="email" name="posta" id="posta" pattern="[a-z]{2,}[0-9]{3}@ikasle.ehu.(eus|es)" placeholder="example@ikasle.ehu.es" autofocus required />
 			<p>Galderaren testua:</p>
-			<input type="text" id="testua" required />
+			<input type="text" id="testua" name="testua" required />
 			<p>Erantzun zuzen bat</p>
-			<input type="text" id="eZuzen" required />
+			<input type="text" id="eZuzen" name="eZuzen" required />
 			<p>Erantzun okerra bat</p>
-			<input type="text" id="eOker1" required />
+			<input type="text" id="eOker1" name="eOker1" required />
 			<p>Beste erantzun oker bat</p>
-			<input type="text" id="eOker2" required />
+			<input type="text" id="eOker2" name="eOker2"required />
 			<p>Beste erantzun oker bat</p>
-			<input type="text" id="eOker3" required />
+			<input type="text" id="eOker3" name="eOker3" required />
 			<p>Galderaren zaitasuna</p>
 			<input type="range" name="zailtasun" id="zailtasun" min="1" max="5" required />
 			<span id="zailZenb"></span>
 			<p>Galderaren gai-arloa</p>
-			<input type="text" id="gaiarloa" required />
+			<input type="text" id="gaiarloa" name="gaiarloa" required />
 			<p class="argazkia"><label for="argazkia"> Galderaren irudia: </label>
 			<input type="file" id="argazkia" name="argazkia"/>
 			</p>
 			<img id="ikusiarg" src="" width="300px">
 			<br>
 			<input type="reset" value="Reset">
-			<input type="submit" id="bidali" value="Bidali"/>
+			<input type="submit" id="bidali"name="bidali" value="Bidali"/>
 			<a href="layout.html">
 				<img src="https://image.flaticon.com/icons/png/512/2/2801.png" style="width:42px;height:42px;border:0;">
 			</a>
