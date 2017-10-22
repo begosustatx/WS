@@ -1,7 +1,7 @@
 <?php
 	$local = 0;
 	if($local == 0 ){
-		$server="localhost:1234";
+		$server="localhost";
 		$user="root";
 		$pass="";
 		$db="quiz";

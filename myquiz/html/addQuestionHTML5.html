@@ -12,7 +12,7 @@
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
-  <script src="js/jquery.min.js"></script>
+  <script src="../js/jquery.min.js"></script>
   <script>
 	$(document).ready(function(){
 		
@@ -43,6 +43,10 @@
 				
 		});
 		
+		/* Reseteatu irudia */
+		$("#reset").click(function(){
+			$("#ikusiarg").removeAttr("src");
+		});
 		/* Zailtasunaren zenbakia (balioa) ikuskatzeko funtzioa*/
 		$("#zailtasun").change(function(){
 			console.log("zailtasuna aldatu da");
@@ -63,7 +67,7 @@
 			
 			function fileOnload(e) {
 				var result=e.target.result;
-				$("#ikusiarg").attr("src",result);
+				$("#ikusiarg").attr("src",e.target.result);
 			}
 		});
 	});
@@ -71,9 +75,9 @@
   </script>
   </head>
   <body>
-		<form id="galderaF" name="galderenF" action="../php/addQuestion.php" method="post" enctype="multipart/form-data">
+		<form id="galderaF" name="galderenF" action="../php/addQuestionWithImage.php" method="post" enctype="multipart/form-data">
 			<p>Posta:</p>
-			<input type="email" name="posta" id="posta" pattern="[a-z]{2,}[0-9]{3}@ikasle.ehu.(eus|es)" placeholder="example@ikasle.ehu.es" autofocus required />
+			<input type="email" name="posta" id="posta" pattern="[a-z]{2,}[0-9]{3}@ikasle[.]ehu[.](eus|es)" placeholder="example@ikasle.ehu.es" autofocus required />
 			<p>Galderaren testua:</p>
 			<input type="text" id="testua" name="testua" required />
 			<p>Erantzun zuzen bat</p>
@@ -81,7 +85,7 @@
 			<p>Erantzun okerra bat</p>
 			<input type="text" id="eOker1" name="eOker1" required />
 			<p>Beste erantzun oker bat</p>
-			<input type="text" id="eOker2" name="eOker2"required />
+			<input type="text" id="eOker2" name="eOker2" required />
 			<p>Beste erantzun oker bat</p>
 			<input type="text" id="eOker3" name="eOker3" required />
 			<p>Galderaren zaitasuna</p>
@@ -94,10 +98,10 @@
 			</p>
 			<img id="ikusiarg" src="" width="300px">
 			<br>
-			<input type="reset" value="Reset">
-			<input type="submit" id="bidali" value="Bidali"/>
+			<input type="reset" id="reset" name="reset" value="Reset">
+			<input type="submit" id="bidali" name="bidali" value="Bidali"/>
 			<a href="layout.html">
-				<img src="https://image.flaticon.com/icons/png/512/2/2801.png" style="width:42px;height:42px;border:0;">
+				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
 			</a>
 		</form>
   </body>
