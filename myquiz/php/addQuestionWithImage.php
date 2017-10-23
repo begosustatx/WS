@@ -24,7 +24,7 @@
 			$img_tmp = $_FILES['argazkia']['tmp_name']; // Argazkiaren PATH.
 			$mota = $_FILES['argazkia']['type']; // Argazkiaren mota.
 			$imgData = mysqli_escape_string($link, file_get_contents($img_tmp));
-			$sql="INSERT INTO questions(posta, testua, eZuzen, eOker1, eOker2, eOker3, zailtasun, gaiarloa, argazkia) VALUES ('$_POST[posta]', '$_POST[testua]', '$_POST[eZuzen]', '$_POST[eOker1]', '$_POST[eOker2]', '$_POST[eOker3]', '$_POST[zailtasun]', '$_POST[gaiarloa]','$imgData')";
+			$sql="INSERT INTO questions(posta, testua, eZuzen, eOker1, eOker2, eOker3, zailtasun, gaiarloa, argazkia, arg_mota) VALUES ('$_POST[posta]', '$_POST[testua]', '$_POST[eZuzen]', '$_POST[eOker1]', '$_POST[eOker2]', '$_POST[eOker3]', '$_POST[zailtasun]', '$_POST[gaiarloa]','$imgData', '$mota')";
 			$ema = mysqli_query($link, $sql);
 			if(!$ema){
 				echo "Errorea query-a gauzatzerakoan: " . mysqli_error($link);

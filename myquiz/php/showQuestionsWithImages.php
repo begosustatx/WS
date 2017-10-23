@@ -20,8 +20,8 @@
 	$galderak=mysqli_query($link, "select * from questions");
 	echo '<table border=1><tr><th> Posta </th><th> Testua </th><th> Erantzun zuzena </th><th> Erantzun okerra 1 </th><th> Erantzun okerra 2 </th><th> Erantzun okerra 3 </th><th> Zailtasuna </th><th> Gaiarloa </th> <th> Argazkia </th></tr>';
 	while($row = mysqli_fetch_array($galderak)){
-		$img=mysqli_query($link, "SELECT argazkia FROM questions WHERE id=" . $row['id']);
-		echo '<tr><td>' . $row['posta'] . '</td><td>' . $row['testua'] . '</td><td>' . $row['eZuzen'] . '</td><td>' . $row['eOker1'] . '</td><td>' . $row['eOker2'] . '</td><td>' . $row['eOker3'] . '</td><td>' . $row['zailtasun'] . '</td><td>' . $row['gaiarloa'] . '</td><td> <img src="showQuestionsWithImages.php?id=' . $row['argazkia'] .'"/></td></tr>';
+		//$img=mysqli_query($link, "SELECT argazkia FROM questions WHERE id=" . $row['id']);
+		echo '<tr><td>' . $row['posta'] . '</td><td>' . $row['testua'] . '</td><td>' . $row['eZuzen'] . '</td><td>' . $row['eOker1'] . '</td><td>' . $row['eOker2'] . '</td><td>' . $row['eOker3'] . '</td><td>' . $row['zailtasun'] . '</td><td>' . $row['gaiarloa'] . '</td><td> <img src="showImage.php?id=' . $row['ID'] . '"/></td></tr>';
 	}
 	echo '</table>';
 	mysqli_close($link); // Konexioa itxi
