@@ -16,11 +16,11 @@
 		echo "Konexio hutxegitea MySQLra: " . mysqli_connect_error();
 		exit();
 		}
-	//argazkia igo dela konprobatzeko
+		
 	if(isset($_POST['bidali']))
 	{	
 		$onartuak = array("image/jpg", "image/jpeg", "image/gif", "image/png");
-		if(in_array($_FILES['argazkia']['type'], $onartuak)){
+		if(in_array($_FILES['argazkia']['type'], $onartuak)){ // Argazkia igo dela konprobatzeko
 			$img_tmp = $_FILES['argazkia']['tmp_name']; // Argazkiaren PATH.
 			$mota = $_FILES['argazkia']['type']; // Argazkiaren mota.
 			$imgData = mysqli_escape_string($link, file_get_contents($img_tmp));
@@ -33,7 +33,18 @@
 				echo  "<p> Ondo txertatu da.</p>";
 				echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showQuestionsWithImages.php'>hemen</a></p>" ;
 			}
-		} else echo "Argazki moduan sartu dena ez da argazkia eta ezin da igo. <a href='../html/addQuestionHTML5.html'>Berriro saiatu</a>";
-	} else echo "Argazkia igotzean errorea egon da.";
-		mysqli_close($link); // Konexioa itxi
+		} else { // Argazkia ez bada sartzen
+			$sql="INSERT INTO questions(posta, testua, eZuzen, eOker1, eOker2, eOker3, zailtasun, gaiarloa) VALUES ('$_POST[posta]', '$_POST[testua]', '$_POST[eZuzen]', '$_POST[eOker1]', '$_POST[eOker2]', '$_POST[eOker3]', '$_POST[zailtasun]', '$_POST[gaiarloa]')";
+			
+			$ema = mysqli_query($link, $sql);
+			if(!$ema){
+				echo "Errorea query-a gauzatzerakoan: " . mysqli_error($link);
+				echo "<a href='../html/addQuestionHTML5.html'>Berriro saiatu</a>";
+			}else {
+			echo  "<p> Ondo txertatu da.</p>";
+			echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showQuestionsWithImages.php'>hemen</a></p>" ;
+			}
+		}
+	} else echo "Bidalketan errorea egon da.";
+	mysqli_close($link); // Konexioa itxi
 ?>
