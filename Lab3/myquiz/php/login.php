@@ -15,34 +15,34 @@
   </head>
   <body>
 	<form method="post" id="login" name="login">
-		Email: <input type="email" name="posta" id="posta" pattern="[a-z]{2,}[0-9]{3}@ikasle[.]ehu[.](eus|es)" placeholder="example@ikasle.ehu.es" autofocus required />
+		Email: <input type="email" name="posta" id="posta" pattern="[a-z]{2,}[0-9]{3}@ikasle[.]ehu[.](eus|es)" placeholder="example@ikasle.ehu.es" autofocus />
 		<br>
 		Password: <input type="password" name="pass" id="pass"/>
 		<input type="submit" id="bidali" name="bidali" value="Login"/>
 	</form>
-  </body>
-  
-</html>
-<?php
-	if(isset($_POST['posta'])){
+	<?php
+	if(isset($_POST['posta']) && !empty($_POST['posta'])){
 		$usr_mail=$_POST['posta'];
 		include 'dbconfig.php';
 		$link = new mysqli($server, $user, $pass, $db) or die ("Error while connecting to data base.");
-		if(isset($_POST['pass'])){
+		if(isset($_POST['pass']) && !empty($_POST['pass'])){
 			$usr_pass=$_POST['pass'];
-			$sql="SELECT * FROM users WHERE posta='$usr_mail' and password='$usr_pass'";
+			$sql="SELECT * FROM erabiltzaileak WHERE posta='$usr_mail' and pasahitza='$usr_pass'";
 			$result=$link->query($sql);
 			if(!($result)){
-				echo "Error in the query" . result->error;
+				echo "Error in the query" . $result->error;
 			} else {
 				$rows_cont = $result->num_rows;
 				$link->close();
 				if($rows_cont==1){
 					$rows_cont=0;
-					header('location: '); // Bete behar da.
+					header('location: ../html/layoutR.html'); 
 				} else 
-					else echo "<script> alert('Authentication failure!') </script>";
+					echo "<script> alert('Authentication failure!') </script>";
 			}
-		} 
-	}
+		} else echo "<script> alert('You have to enter your password!') </script>";
+	} else echo "<script> alert('You have to enter your email!') </script>"
 ?>
+  </body>
+  
+</html>
