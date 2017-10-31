@@ -19,6 +19,9 @@
 		<br>
 		Password: <input type="password" name="pass" id="pass"/>
 		<input type="submit" id="bidali" name="bidali" value="Login"/>
+		<a href="layout.html">
+				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
+		</a>
 	</form>
 	<?php
 	if(isset($_POST['posta']) && !empty($_POST['posta'])){
