@@ -13,4 +13,19 @@
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
   </head>
+  <style>
+	div {
+		text-align: center;
+		padding: 50px 50px 50px 50px;
+	}
+  </style>
+  <body>
+	<?php
+		$email=$_GET['email'];
+		echo '<div> Bye ' . $email .' :)';
+	?>
+	<br>
+	<a href="../html/layout.html">Home</a>
+	</div>
+  </body>
  </html>

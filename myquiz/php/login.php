@@ -17,7 +17,8 @@
 	<form method="post" id="login" name="login">
 		<?php
 			if(isset($_GET['email'])){
-				echo 'Email: <input type="email" name="posta" id="posta" value="' . $_GET['email'] . " autofocus />";
+				echo 'Email: <input type="email" name="posta" id="posta" value="' . $_GET['email'] . '" autofocus />';
+				
 			} else{
 				echo 'Email: <input type="email" name="posta" id="posta" placeholder="example@ikasle.ehu.es" autofocus />';
 			}
@@ -46,7 +47,7 @@
 				$link->close();
 				if($rows_cont==1){
 					$rows_cont=0;
-					header('location: ../html/layoutR.php?email='.$usr_mail);
+					header('location: layoutR.php?email='.$usr_mail);
 				} else 
 					echo "<script> alert('Authentication failure!') </script>";
 			}
