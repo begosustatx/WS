@@ -1,16 +1,5 @@
 <?php
-    $local = 0;
-	if($local == 0 ){
-		$server="localhost";
-		$user="root";
-		$pass="";
-		$db="quiz";
-	} else {
-		$server="localhost";
-		$user="id2923223_apato001";
-		$pass="***";
-		$db="id2923223_quiz";
-	}
+   include 'dbconfig.php';
 	$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
 	if (mysqli_connect_errno()){
 		echo "Konexio hutxegitea MySQLra: " . mysqli_connect_error();
@@ -26,5 +15,8 @@
 			echo '<tr><td>' . $row['posta'] . '</td><td>' . $row['testua'] . '</td><td>' . $row['eZuzen'] . '</td><td>' . $row['eOker1'] . '</td><td>' . $row['eOker2'] . '</td><td>' . $row['eOker3'] . '</td><td>' . $row['zailtasun'] . '</td><td>' . $row['gaiarloa'] . '</td><td> <img src="data:' . $row['arg_mota'] . ';base64,' . base64_encode($row['argazkia']) . '" width="300px" height="300px" /></td></tr>';
 	}	
 	echo '</table>';
+	echo '<a href="../html/layout.html">
+				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
+		</a>';
 	mysqli_close($link); // Konexioa itxi
 ?>
