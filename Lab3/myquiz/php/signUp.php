@@ -21,7 +21,7 @@
 		Nick: <input type="text" name="nick" id="nick" pattern="^[A-Za-z]{1,}$"/><br>
 		Password: <input type="password" name="pass" id="pass"/><br>
 		Password-a errepikatu: <input type="password" name="pass2" /><br>
-		<p class="argazkia"><label for="argazkia"> Galderaren irudia: </label>
+		<p class="argazkia"><label for="argazkia"> Irudia: </label>
 			<input type="file" id="argazkia" name="argazkia"/>
 			</p>
 			<img id="ikusiarg" src="" width="300px">
@@ -63,17 +63,16 @@
 							$ema = mysqli_query($link, $sql);
 							if(!$ema){
 								echo "Errorea query-a gauzatzerakoan: " . mysqli_error($link);
-								echo "<a href='../php/addQuestionHTML5.html'>Berriro saiatu</a>";
+								echo "<a href='../php/singUp.php'>Berriro saiatu</a>";
 							}else {
 								echo  "<br><p> Ondo txertatu da.</p>";
-								echo  "<p> Saioa hasi nahi baduzu click egin <a href='login.php'>hemen</a></p>" ;
+								echo  "<p> Saioa hasi nahi baduzu click egin <a href='login.php?email=" . $_POST['posta'] . "'>hemen</a></p>" ;
 							}
 						}
 				
 					}
 					else{
-						$sql="INSERT INTO erabiltzaileak(posta, deitura, nick, pasahitza) VALUES ('$_POST[posta]', '$_POST[deitura]','$_POST[nick]', '$_POST[pass]')";
-						mysql_query($sql); 
+						$sql="INSERT INTO erabiltzaileak(posta, deitura, nick, pasahitza) VALUES ('$_POST[posta]', '$_POST[deitura]','$_POST[nick]', '$_POST[pass]')"; 
 						$ema = mysqli_query($link, $sql);
 						if(!$ema){
 							echo "Errorea query-a gauzatzerakoan: " . mysqli_error($link);
@@ -81,9 +80,7 @@
 						}
 						else {
 							echo  "<p> Ondo txertatu da.</p>";
-							echo  "<p> Saioa hasi nahi baduzu click egin <a href='login.php'>hemen</a></p>" ;
-
-
+							echo  "<p> Saioa hasi nahi baduzu click egin <a href='login.php?email=" . $_POST['posta'] . "'>hemen</a></p>" ;
 						}
 					}
 				} 

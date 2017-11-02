@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>Quizzes</title>
+	<title>Login</title>
     <link rel='stylesheet' type='text/css' href='../stylesPWS/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
@@ -15,14 +15,21 @@
   </head>
   <body>
 	<form method="post" id="login" name="login">
-		Email: <input type="email" name="posta" id="posta" pattern="[a-z]{2,}[0-9]{3}@ikasle[.]ehu[.](eus|es)" placeholder="example@ikasle.ehu.es" autofocus />
+		<?php
+			if(isset($_GET['email'])){
+				echo 'Email: <input type="email" name="posta" id="posta" value="' . $_GET['email'] . '" autofocus />';
+				
+			} else{
+				echo 'Email: <input type="email" name="posta" id="posta" placeholder="example@ikasle.ehu.es" autofocus />';
+			}
+		?>
 		<br>
 		Password: <input type="password" name="pass" id="pass"/>
 		<input type="submit" id="bidali" name="bidali" value="Login"/>
-		<a href="layout.html">
-				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
-		</a>
 	</form>
+	<a href="../html/layout.html">
+				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
+	</a>
 	<?php
 	if(isset($_POST['posta']) && !empty($_POST['posta'])){
 		$usr_mail=$_POST['posta'];
@@ -36,15 +43,16 @@
 				echo "Error in the query" . $result->error;
 			} else {
 				$rows_cont = $result->num_rows;
+				$row = $result->fetch_array(MYSQLI_ASSOC);
 				$link->close();
 				if($rows_cont==1){
 					$rows_cont=0;
-					header('location: ../html/layoutR.html'); 
+					header('location: layoutR.php?email='.$usr_mail);
 				} else 
 					echo "<script> alert('Authentication failure!') </script>";
 			}
 		} else echo "<script> alert('You have to enter your password!') </script>";
-	} else echo "<script> alert('You have to enter your email!') </script>"
+	}
 ?>
   </body>
   
