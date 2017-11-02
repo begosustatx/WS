@@ -31,7 +31,7 @@
 		<span><a href='layoutR.php?email=<?php echo $email;?>'>Home</a></span>
 		<span><a href='/quizzes'>Quizzes</a></span>
 		<span><a href='addQuestionWithImage.php?email=<?php echo $email;?>'>Add Question</a></span>
-		<span><a href='showQuestionsWithImages.php'>Show Questions</a></span>
+		<span><a href='showQuestionsWithImages.php?email=<?php echo $email;?>'>Show Questions</a></span>
 		<span><a href='creditsR.php?email=<?php echo $email;?>'>Credits</a></span>
 	</nav>
     <section class="main" id="s1">

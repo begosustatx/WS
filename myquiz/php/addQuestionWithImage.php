@@ -49,36 +49,54 @@
 		$posta=$_GET['email'];
 	?>
    <body>
-		<form id="galderaF" name="galderenF" method="post" enctype="multipart/form-data">
-			<p>Posta:</p>
-			<?php echo $posta;?>
-			<p>Galderaren testua:</p>
-			<input type="text" id="testua" name="testua"  />
-			<p>Erantzun zuzen bat</p>
-			<input type="text" id="eZuzen" name="eZuzen"  />
-			<p>Erantzun okerra bat</p>
-			<input type="text" id="eOker1" name="eOker1"  />
-			<p>Beste erantzun oker bat</p>
-			<input type="text" id="eOker2" name="eOker2"  />
-			<p>Beste erantzun oker bat</p>
-			<input type="text" id="eOker3" name="eOker3"  />
-			<p>Galderaren zaitasuna</p>
-			<input type="range" name="zailtasun" id="zailtasun" min="1" max="5"  />
-			<span id="zailZenb"></span>
-			<p>Galderaren gai-arloa</p>
-			<input type="text" id="gaiarloa" name="gaiarloa"  />
-			<p class="argazkia"><label for="argazkia"> Galderaren irudia: </label>
-			<input type="file" id="argazkia" name="argazkia"/>
-			</p>
-			<img id="ikusiarg" src="" width="300px">
-			<br>
-			<input type="reset" id="reset" name="reset" value="Reset">
-			<input type="submit" id="bidali" name="bidali" value="Bidali"/>
-			
-			<a href="layoutR.php?email=<?php echo $_GET['email'];?>">
-				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
-			</a>
-		</form>
+		<div id='page-wrap'>
+		<header class='main' id='h1'>
+			<div class="right">
+				<span><a href="logOut.php?email=<?php echo $posta; ?>">LogOut</a> </span>
+				<span> Hello <?php echo $posta; ?> :)</span>
+			</div>
+			<h2>Quiz: crazy questions</h2>
+		</header>
+		<nav class='main' id='n1' role='navigation'>
+			<span><a href='layoutR.php?email=<?php echo $posta;?>'>Home</a></span>
+			<span><a href='/quizzes'>Quizzes</a></span>
+			<span><a href='addQuestionWithImage.php?email=<?php echo $posta;?>'>Add Question</a></span>
+			<span><a href='showQuestionsWithImages.php?email=<?php echo $posta;?>'>Show Questions</a></span>
+			<span><a href='creditsR.php?email=<?php echo $posta;?>'>Credits</a></span>
+		</nav>
+		<section class="main" id="s1">
+			<form id="galderaF" name="galderenF" method="post" enctype="multipart/form-data">
+				<p>Posta:</p>
+				<?php echo $posta;?>
+				<p>Galderaren testua:</p>
+				<input type="text" id="testua" name="testua"  />
+				<p>Erantzun zuzen bat</p>
+				<input type="text" id="eZuzen" name="eZuzen"  />
+				<p>Erantzun okerra bat</p>
+				<input type="text" id="eOker1" name="eOker1"  />
+				<p>Beste erantzun oker bat</p>
+				<input type="text" id="eOker2" name="eOker2"  />
+				<p>Beste erantzun oker bat</p>
+				<input type="text" id="eOker3" name="eOker3"  />
+				<p>Galderaren zaitasuna</p>
+				<input type="range" name="zailtasun" id="zailtasun" min="1" max="5"  />
+				<span id="zailZenb"></span>
+				<p>Galderaren gai-arloa</p>
+				<input type="text" id="gaiarloa" name="gaiarloa"  />
+				<p class="argazkia"><label for="argazkia"> Galderaren irudia: </label>
+				<input type="file" id="argazkia" name="argazkia"/>
+				</p>
+				<img id="ikusiarg" src="" width="300px">
+				<br>
+				<input type="reset" id="reset" name="reset" value="Reset">
+				<input type="submit" id="bidali" name="bidali" value="Bidali"/>
+			</form>
+		</section>
+		<footer class='main' id='f1'>
+			<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
+			<a href='https://github.com/begosustatx/WS'>Link GITHUB</a>
+		</footer>
+		
  
 <?php
 	
@@ -140,13 +158,13 @@
 		}
 	mysqli_close($link); // Konexioa itxi
 	}
-	/* */
+	/* 
 	function test_input($data) {
 		$data = trim($data);
 		$data = stripslashes($data);
 		$data = htmlspecialchars($data);
 		return $data;
-	}
+	}*/
 ?>
  </body>
 </html>

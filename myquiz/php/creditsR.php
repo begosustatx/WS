@@ -19,24 +19,23 @@
 		header("location: ../html/layout.html");
   ?>
   <body>
-  <div id='page-wrap'>
-	<header class='main' id='h1'>
-	<div class="right">
-      <span><a href="../php/login.php">LogIn</a> </span>
-      <span><a href="../php/signUp.php">SingUp</a> </span>
-	  <span>Anonymous</span>
-	</div>
-	<h2>Quiz: crazy questions</h2>
-    </header>
-	<nav class='main' id='n1' role='navigation'>
-		<span><a href='layoutR.php?email=<?php echo $email;?>'>Home</a></span>
-		<span><a href='/quizzes'>Quizzes</a></span>
-		<span><a href='addQuestionWithImage.php?email=<?php echo $email;?>'>Add Question</a></span>
-		<span><a href='showQuestionsWithImages.php'>Show Questions</a></span>
-		<span><a href='credits.php?email=<?php echo $email;?>'>Credits</a></span>
-	</nav>
-    <section class="main" id="s1">
-	<div class='credits'>
+	<div id='page-wrap'>
+		<header class='main' id='h1'>
+			<div class="right">
+				<span><a href="logOut.php?email=<?php echo $email; ?>">LogOut</a> </span>
+				<span> Hello <?php echo $email; ?> :)</span>
+			</div>
+			<h2>Quiz: crazy questions</h2>
+		</header>
+		<nav class='main' id='n1' role='navigation'>
+			<span><a href='layoutR.php?email=<?php echo $email;?>'>Home</a></span>
+			<span><a href='/quizzes'>Quizzes</a></span>
+			<span><a href='addQuestionWithImage.php?email=<?php echo $email;?>'>Add Question</a></span>
+			<span><a href='showQuestionsWithImages.php?email=<?php echo $email;?>'>Show Questions</a></span>
+			<span><a href='creditsR.php?email=<?php echo $email;?>'>Credits</a></span>
+		</nav>
+		<section class="main" id="s1">
+	<div>
 		<h1>Credits</h1>
 
 		</br>
