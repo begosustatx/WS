@@ -119,17 +119,18 @@
 					echo "<script> alert('Galderaren testu motzegia')</script>";
 				}  
 			}
-		}  
+		} 
 		
-		
+		// Balio egokiak sartu badira XML fitxategia kargatu.
+		$xml = simplexml_load_file('../xml/questions.xml'); 
 	
-	include 'dbconfig.php';
-	$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
-	if (mysqli_connect_errno()){
-		echo "Konexio hutxegitea MySQLra: " . mysqli_connect_error();
-		exit();
-	}
-		
+		include 'dbconfig.php';
+		$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
+		if (mysqli_connect_errno()){
+			echo "Konexio hutxegitea MySQLra: " . mysqli_connect_error();
+			exit();
+		}
+			
 		$onartuak = array("image/jpg", "image/jpeg", "image/gif", "image/png");
 		if(in_array($_FILES['argazkia']['type'], $onartuak)){ // Argazkia igo dela konprobatzeko
 			$img_tmp = $_FILES['argazkia']['tmp_name']; // Argazkiaren PATH.
@@ -141,22 +142,46 @@
 				echo "Errorea query-a gauzatzerakoan: " . mysqli_error($link);
 				echo "<a href='../html/addQuestionHTML5.html'>Berriro saiatu</a>";
 			}else {
+				$nquestion = $xml->addChild('assessmentItem');
+				$nquestion->addAttribute('complexity', $_POST['zailtasun']);
+				$nquestion->addAttribute('subject', $_POST['gaiarloa']);
+				$text = $nquestion->addChild('itemBody');
+				$text->addChild('p', $_POST['testua']);
+				$qC = $nquestion->addChild('correctResponse');
+				$qC->addChild('value', $_POST['eZuzen']);
+				$qIs = $nquestion->addChild('incorrectResponses');
+				$qIs->addChild('value', $_POST['eOker1']);
+				$qIs->addChild('value', $_POST['eOker2']);
+				$qIs->addChild('value', $_POST['eOker3']);
+				$xml->asXML('../xml/questions.xml'); // Aldaketak XML fitxategian gorde
 				echo  "<br><p> Ondo txertatu da.</p>";
 				echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showQuestionsWithImages.php'>hemen</a></p>" ;
 			}
 		} else { // Argazkia ez bada sartzen
 			$sql="INSERT INTO questions(posta, testua, eZuzen, eOker1, eOker2, eOker3, zailtasun, gaiarloa) VALUES ('$posta', '$testua', '$_POST[eZuzen]', '$_POST[eOker1]', '$_POST[eOker2]', '$_POST[eOker3]', '$_POST[zailtasun]', '$_POST[gaiarloa]')";
-			
+				
 			$ema = mysqli_query($link, $sql);
 			if(!$ema){
 				echo "Errorea query-a gauzatzerakoan: " . mysqli_error($link);
 				echo "<a href='../html/addQuestionHTML5.html'>Berriro saiatu</a>";
 			}else {
-			echo  "<br><p> Ondo txertatu da.</p>";
-			echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showQuestionsWithImages.php'>hemen</a></p>" ;
+				$nquestion = $xml->addChild('assessmentItem');
+				$nquestion->addAttribute('complexity', $_POST['zailtasun']);
+				$nquestion->addAttribute('subject', $_POST['gaiarloa']);
+				$text = $nquestion->addChild('itemBody');
+				$text->addChild('p', $_POST['testua']);
+				$qC = $nquestion->addChild('correctResponse');
+				$qC->addChild('value', $_POST['eZuzen']);
+				$qIs = $nquestion->addChild('incorrectResponses');
+				$qIs->addChild('value', $_POST['eOker1']);
+				$qIs->addChild('value', $_POST['eOker2']);
+				$qIs->addChild('value', $_POST['eOker3']);
+				$xml->asXML('../xml/questions.xml'); // Aldaketak XML fitxategian gorde
+				echo  "<br><p> Ondo txertatu da.</p>";
+				echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showQuestionsWithImages.php'>hemen</a></p>" ;
 			}
 		}
-	mysqli_close($link); // Konexioa itxi
+		mysqli_close($link); // Konexioa itxi
 	}
 	/* 
 	function test_input($data) {
