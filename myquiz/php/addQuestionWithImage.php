@@ -176,9 +176,11 @@
 				$qIs->addChild('value', $_POST['eOker1']);
 				$qIs->addChild('value', $_POST['eOker2']);
 				$qIs->addChild('value', $_POST['eOker3']);
-				$xml->asXML('../xml/questions.xml'); // Aldaketak XML fitxategian gorde
+				//$xml->asXML('../xml/questions.xml'); // Aldaketak XML fitxategian gorde
+				$xml->asXML('../xml/questionsTransAuto.xml'); // Aldaketak XML fitxategian gorde
 				echo  "<br><p> Ondo txertatu da.</p>";
-				echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showQuestionsWithImages.php'>hemen</a></p>" ;
+				//echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showXMLQuestions.php'>hemen</a></p>" ;
+				echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='../xml/questionsTransAuto.xml'>hemen</a></p>" ;
 			}
 		}
 		mysqli_close($link); // Konexioa itxi
