@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../xsl/showQuestions.xsl"?>
+<assessmentItems>
+	<assessmentItem complexity="3" subject="mikologia">
+		<itemBody> 
+			<p>Zein Amanita da jangarria?</p>
+		</itemBody>
+		<correctResponse>
+			<value>Caesarea</value>
+		</correctResponse>
+		<incorrectResponses>
+			<value>Phalloides</value>
+			<value>Muscaria</value>
+			<value>Virosa</value>
+		</incorrectResponses>
+	</assessmentItem>
+	<assessmentItem complexity="3" subject="mikologia">
+		<itemBody> 
+			<p>Tripakiek zer dute kapela azpian?</p>
+		</itemBody>
+		<correctResponse>
+			<value>Eztenak</value>
+		</correctResponse>
+		<incorrectResponses>
+			<value>Filamenduak</value>
+			<value>Himenioa</value>
+			<value>Hodiak</value>
+		</incorrectResponses>
+	</assessmentItem>
+	<assessmentItem complexity="5" subject="mikologia">
+		<itemBody>
+			<p>Eranztuna du</p>
+		</itemBody>
+		<correctResponse>
+			<value>Galanpernak</value>
+		</correctResponse>
+		<incorrectResponses>
+			<value>Gibel urdinak</value>
+			<value>Esnegorriak</value>
+			<value>Errotariak</value>
+		</incorrectResponses>
+	</assessmentItem>
+	<assessmentItem complexity="3" subject="Kolorea">
+		<itemBody>
+			<p>Zein kolorea da?</p>
+		</itemBody>
+		<correctResponse>
+			<value>Horia</value>
+		</correctResponse>
+		<incorrectResponses>
+			<value>Zuria</value>
+			<value>Beltza</value>
+			<value>Urdina</value>
+		</incorrectResponses>
+	</assessmentItem>
+	<assessmentItem complexity="3" subject="Animaliak">
+		<itemBody>
+			<p>Zer da katua?</p>
+		</itemBody>
+		<correctResponse>
+			<value>Animalia</value>
+		</correctResponse>
+		<incorrectResponses>
+			<value>Platerra</value>
+			<value>Zuhaitza</value>
+			<value>Etxea</value>
+		</incorrectResponses>
+	</assessmentItem>
+</assessmentItems>
