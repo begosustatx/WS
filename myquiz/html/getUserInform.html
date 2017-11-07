@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
+	<title>User Information</title>
+	<script src="../js/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#botoia').click(function(){
+			console.log("funtzio barruan");
+			$.get('../xml/erabiltzaileak.xml', function(d){
+				console.log("XML funtzio barruan");
+				var posta = $('#posta').val();
+				var epostenZer = $(d).find('eposta');
+				var tlfZer = $(d).find('telefonoa');
+				var namesZer = $(d).find('izena');
+				var abizen1Zer = $(d).find('abizena1');
+				var abizen2Zer = $(d).find('abizena2');
+				var aurkitua=0;
+				for (var i = 0; i < epostenZer.length; i++){
+					if(epostenZer[i].childNodes[0].nodeValue == posta){
+						console.log("Posta: " + epostenZer[i].childNodes[0].nodeValue);
+						$('#tlf').val(tlfZer[i].childNodes[0].nodeValue);
+						$('#name').val(namesZer[i].childNodes[0].nodeValue);
+						$('#abizena').val(abizen1Zer[i].childNodes[0].nodeValue + " " + abizen2Zer[i].childNodes[0].nodeValue);
+						aurkitua=1;
+					} 
+					/*$('#zerrenda').append($('<option>',{
+						value: epostenZer[i].childNodes[0].nodeValue,
+						text: epostenZer[i].childNodes[0].nodeValue
+					}));*/
+				}
+				if(aurkitua==0) alert("This e-mail is not register in UPV/EHU. Try with some other.");
+			});
+		});
+	});
+	</script>
+   </head>
+   <body>
+	<h1> Type an student's valid email ...</h1>
+	<h1> to get his/her personal record</h1><br>
+	<p>Student's email</p><input type="text" name="posta" id="posta"/>
+	<p>Telephone number</p><input type="text" name="tlf" id="tlf"/>
+	<p>Student's name</p><input type="text" name="name" id="name"/>
+	<p>Student's surname</p><input type="text" name="abizena" id="abizena"/>
+	<br>
+	<input type="button" name="botoia" id="botoia" value="Autocomplete"/>
+   </body>
+</html>
