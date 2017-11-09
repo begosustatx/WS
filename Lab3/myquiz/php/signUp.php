@@ -14,10 +14,10 @@
 		   href='../stylesPWS/smartphone.css' />
   </head>
   <body>
-	<form method="post" id="signUp" name="signUp"  method="post" enctype="multipart/form-data">
-		Email: <input type="email" name="posta" id="posta" ="^[a-z]{2,}[0-9]{3}@ikasle[.]ehu[.](eus|es)$" placeholder="example@ikasle.ehu.es" autofocus autofocus />
+	<form method="post" id="signUp" name="signUp" enctype="multipart/form-data">
+		Email: <input type="email" name="posta" id="posta" pattern="^[a-z]{2,}[0-9]{3}@ikasle\.ehu\.(eus|es)$" placeholder="example@ikasle.ehu.es" autofocus />
 		<br>
-		Deitura: <input type="text" name="deitura" id="deitura" pattern="^[A-Z][a-z]{1,}[\s][A-Z][a-z]{1,}$"  /><br>
+		Deitura: <input type="text" name="deitura" id="deitura" pattern="[A-Z][a-z]+[\s][a-z\s]*[A-Z][a-z][\sa-z]*"  /><br>
 		Nick: <input type="text" name="nick" id="nick" pattern="^[A-Za-z]{1,}$"/><br>
 		Password: <input type="password" name="pass" id="pass"/><br>
 		Password-a errepikatu: <input type="password" name="pass2" /><br>
@@ -26,12 +26,12 @@
 			</p>
 			<img id="ikusiarg" src="" width="300px">
 			<br>
-		<input type="submit" id="bidali" name="bidali" value="Login"/>
+		<input type="submit" id="bidali" name="bidali" value="SignUp"/>
 	</form>
-  </body>
-  
-</html>
-<?php
+	<a href="../html/layout.html">
+				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
+	</a>
+	<?php
 	session_start();
 	include "dbconfig.php"; 
 	$link = new mysqli($server, $user, $pass, $db) or die ("Error while connecting to data base.");
@@ -65,10 +65,11 @@
 								echo "Errorea query-a gauzatzerakoan: " . mysqli_error($link);
 								echo "<a href='../php/singUp.php'>Berriro saiatu</a>";
 							}else {
-								echo  "<br><p> Ondo txertatu da.</p>";
-								echo  "<p> Saioa hasi nahi baduzu click egin <a href='login.php?email=" . $_POST['posta'] . "'>hemen</a></p>" ;
+								echo "<script> alert('Success. \n Going to home ...'); </script>";
+								
+								echo "<script> location.replace(layoutR.php?email=" . $_POST['posta'] . ");</script>";
 							}
-						}
+						} 
 				
 					}
 					else{
@@ -79,9 +80,10 @@
 							echo "<a href='../php/signUp.php'>Berriro saiatu</a>";
 						}
 						else {
-							echo  "<p> Ondo txertatu da.</p>";
-							echo  "<p> Saioa hasi nahi baduzu click egin <a href='login.php?email=" . $_POST['posta'] . "'>hemen</a></p>" ;
-						}
+							echo "<script> alert('Success. \n Going to home ...'); </script>";
+							
+							echo "<script> window.location.assign('layoutR.php?email=" . $_POST['posta'] . "');</script>";
+						} 
 					}
 				} 
 				else 
@@ -100,3 +102,5 @@
 	mysqli_close($link); // Konexioa itxi
 	
 ?>
+  </body>
+</html>
