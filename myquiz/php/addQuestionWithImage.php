@@ -12,7 +12,7 @@
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
-   </head>
+   
    <script src="../js/jquery.min.js"></script>
    <script>
 	$(document).ready(function(){
@@ -45,10 +45,33 @@
 			});
 	});
    </script>
+   </head>
+   
+   <body>
    <?php
 		$posta=$_GET['email'];
+		$posta = test_input($posta);
+		
+		if(!(isset($_GET['email'])) && empty($_GET['email']))
+			echo "<script> window.location.assign('../html/layout.html');</script>";
+		include 'dbconfig.php';
+		$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
+		$sql="SELECT * FROM erabiltzaileak WHERE posta = '$posta'";
+		if($ema=mysqli_query($link, $sql)){
+			$dago=mysqli_num_rows($ema);
+				echo "<script> console.log(".$dago.");</script>"; 
+			mysqli_close($link); // Konexioa itxi
+			if($dago==0) // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
+				echo "<script> window.location.assign('../html/layout.html');</script>"; 
+			mysqli_free_result($ema);
+		} 
+		function test_input($data) {
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data);
+		return $data;
+	}
 	?>
-   <body>
 		<div id='page-wrap'>
 		<header class='main' id='h1'>
 			<div class="right">
@@ -91,32 +114,30 @@
 				<input type="reset" id="reset" name="reset" value="Reset">
 				<input type="submit" id="bidali" name="bidali" value="Bidali"/>
 			</form>
-		</section>
-		<footer class='main' id='f1'>
-			<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
-			<a href='https://github.com/begosustatx/WS'>Link GITHUB</a>
-		</footer>
-		
- 
-<?php
-	
+	<?php
+	include 'dbconfig.php';
 	if(isset($_POST['bidali']))
 	{	
 		if(isset($posta) && empty($posta)){
 			echo "<script> alert('Berrigorrezko eremu guztiak bete')</script>";
+			exit();
 		} elseif (empty($_POST['eZuzen']) || empty($_POST['eOker1']) || empty($_POST['eOker2']) || empty($_POST['eOker3']) || empty($_POST['zailtasun']) || empty($_POST['gaiarloa'])){
 			echo "<script> alert('Berrigorrezko eremu guztiak bete')</script>";
+			exit();
 		}	else {
 			$patroia='/^[a-z]{2,}[0-9]{3}@ikasle\.ehu\.(eus|es)$/';
 			if(!preg_match($patroia,$posta)){
 				echo "<script> alert('Posta okerra')</script>";
+				exit();
 			}
 			if(!isset($_POST['testua'])){
 				echo "<script> alert('Berrigorrezko eremu guztiak bete')</script>";
+				exit();
 			} else {
 				$testua= $_POST['testua'];
 				if(strlen($testua)<9){
 					echo "<script> alert('Galderaren testu motzegia')</script>";
+					exit();
 				}  
 			}
 		} 
@@ -124,7 +145,6 @@
 		// Balio egokiak sartu badira XML fitxategia kargatu.
 		$xml = simplexml_load_file('../xml/questions.xml'); 
 	
-		include 'dbconfig.php';
 		$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
 		if (mysqli_connect_errno()){
 			echo "Konexio hutxegitea MySQLra: " . mysqli_connect_error();
@@ -154,8 +174,12 @@
 				$qIs->addChild('value', $_POST['eOker2']);
 				$qIs->addChild('value', $_POST['eOker3']);
 				$xml->asXML('../xml/questions.xml'); // Aldaketak XML fitxategian gorde
+				//$xml->asXML('../xml/questionsTransAuto.xml'); // Aldaketak XML fitxategian gorde
 				echo  "<br><p> Ondo txertatu da.</p>";
-				echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showQuestionsWithImages.php'>hemen</a></p>" ;
+				//echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showXMLQuestions.php'>hemen</a></p>" ;
+				//echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='../xml/questionsTransAuto.xml'>hemen</a></p>" ;
+				// echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showXMLQuestions.php'>hemen</a></p>" ;
+				ondoTxertatua();
 			}
 		} else { // Argazkia ez bada sartzen
 			$sql="INSERT INTO questions(posta, testua, eZuzen, eOker1, eOker2, eOker3, zailtasun, gaiarloa) VALUES ('$posta', '$testua', '$_POST[eZuzen]', '$_POST[eOker1]', '$_POST[eOker2]', '$_POST[eOker3]', '$_POST[zailtasun]', '$_POST[gaiarloa]')";
@@ -177,19 +201,32 @@
 				$qIs->addChild('value', $_POST['eOker2']);
 				$qIs->addChild('value', $_POST['eOker3']);
 				$xml->asXML('../xml/questions.xml'); // Aldaketak XML fitxategian gorde
-				echo  "<br><p> Ondo txertatu da.</p>";
-				echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showXMLQuestions.php'>hemen</a></p>" ;
+				// $xml->asXML('../xml/questionsTransAuto.xml'); // Aldaketak XML fitxategian gorde
+				// echo  "<br><p> Ondo txertatu da.</p>";
+				// echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showXMLQuestions.php'>hemen</a></p>" ;
+				// echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='../xml/questionsTransAuto.xml'>hemen</a></p>" ;
+				// echo  "<p> Galdera guztiak ikusi ditzazkezu taula moduan <a href='showXMLQuestions.php'>hemen</a></p>" ;
+				ondoTxertatua();
 			}
 		}
 		mysqli_close($link); // Konexioa itxi
 	}
-	/* 
-	function test_input($data) {
-		$data = trim($data);
-		$data = stripslashes($data);
-		$data = htmlspecialchars($data);
-		return $data;
-	}*/
-?>
+	function ondoTxertatua(){
+		echo "<script>
+					if (window.confirm('Ondo txertatu da. Galdera guztiak taula moduan ikusi nahi dituzu?') == true) {
+						window.location.assign('showXMLQuestions.php');
+					}
+			</script>";
+	}
+	
+	?>
+		</section>
+		<footer class='main' id='f1'>
+			<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
+			<a href='https://github.com/begosustatx/WS'>Link GITHUB</a>
+		</footer>
+		
+ 
+
  </body>
 </html>

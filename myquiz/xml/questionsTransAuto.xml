@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="../xsl/showQuestions.xsl"?>
 <assessmentItems>
 	<assessmentItem complexity="3" subject="mikologia">
 		<itemBody> 
@@ -40,30 +39,4 @@
 			<value>Errotariak</value>
 		</incorrectResponses>
 	</assessmentItem>
-	<assessmentItem complexity="3" subject="Kolorea">
-		<itemBody>
-			<p>Zein kolorea da?</p>
-		</itemBody>
-		<correctResponse>
-			<value>Horia</value>
-		</correctResponse>
-		<incorrectResponses>
-			<value>Zuria</value>
-			<value>Beltza</value>
-			<value>Urdina</value>
-		</incorrectResponses>
-	</assessmentItem>
-	<assessmentItem complexity="3" subject="Animaliak">
-		<itemBody>
-			<p>Zer da katua?</p>
-		</itemBody>
-		<correctResponse>
-			<value>Animalia</value>
-		</correctResponse>
-		<incorrectResponses>
-			<value>Platerra</value>
-			<value>Zuhaitza</value>
-			<value>Etxea</value>
-		</incorrectResponses>
-	</assessmentItem>
-</assessmentItems>
+<assessmentItem complexity="1" subject="animalia"><itemBody><p>Zein da mamifero handiena?</p></itemBody><correctResponse><value>Bale urdina</value></correctResponse><incorrectResponses><value>Elefantea</value><value>Girafa</value><value>Hipopotamoa</value></incorrectResponses></assessmentItem><assessmentItem complexity="5" subject="tontoa"><itemBody><p>Pepita existitzen da benetan?</p></itemBody><correctResponse><value>ez</value></correctResponse><incorrectResponses><value>bai</value><value>ez dakit</value><value>igual</value></incorrectResponses></assessmentItem></assessmentItems>

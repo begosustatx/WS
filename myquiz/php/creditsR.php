@@ -13,12 +13,23 @@
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
   </head>
-   <?php
+  
+  <body>
+  <?php
 	$email=$_GET['email'];
 	if(!(isset($_GET['email'])) && empty($_GET['email']))
-		header("location: ../html/layout.html");
+		echo "<script> window.location.assign('../html/layout.html');</script>"; 
+	include 'dbconfig.php';
+		$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
+		$sql="SELECT * FROM erabiltzaileak WHERE posta='$email'";
+		if($ema=mysqli_query($link, $sql)){
+			$dago=mysqli_num_rows($ema);
+			mysqli_close($link); // Konexioa itxi
+			if($dago==0) // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
+			echo "<script> window.location.assign('../html/layout.html');</script>"; 
+			mysqli_free_result($ema);
+		} 
   ?>
-  <body>
 	<div id='page-wrap'>
 		<header class='main' id='h1'>
 			<div class="right">

@@ -32,26 +32,31 @@
 	</a>
 	<?php
 	if(isset($_POST['posta']) && !empty($_POST['posta'])){
-		$usr_mail=$_POST['posta'];
-		include 'dbconfig.php';
-		$link = new mysqli($server, $user, $pass, $db) or die ("Error while connecting to data base.");
-		if(isset($_POST['pass']) && !empty($_POST['pass'])){
-			$usr_pass=$_POST['pass'];
-			$sql="SELECT * FROM erabiltzaileak WHERE posta='$usr_mail' and pasahitza='$usr_pass'";
-			$result=$link->query($sql);
-			if(!($result)){
-				echo "Error in the query" . $result->error;
-			} else {
-				$rows_cont = $result->num_rows;
-				$row = $result->fetch_array(MYSQLI_ASSOC);
-				$link->close();
-				if($rows_cont==1){
-					$rows_cont=0;
-					header('location: layoutR.php?email='.$usr_mail);
-				} else 
-					echo "<script> alert('Authentication failure!') </script>";
-			}
-		} else echo "<script> alert('You have to enter your password!') </script>";
+		$patroia='/^[a-z]{2,}[0-9]{3}@ikasle\.ehu\.(eus|es)$/';
+		if(!preg_match($patroia,$_POST['posta'])){
+				echo "<script> alert('Posta okerra')</script>";
+		} else {		
+			$usr_mail=$_POST['posta'];
+			include 'dbconfig.php';
+			$link = new mysqli($server, $user, $pass, $db) or die ("Error while connecting to data base.");
+			if(isset($_POST['pass']) && !empty($_POST['pass'])){
+				$usr_pass=$_POST['pass'];
+				$sql="SELECT * FROM erabiltzaileak WHERE posta='$usr_mail' and pasahitza='$usr_pass'";
+				$result=$link->query($sql);
+				if(!($result)){
+					echo "Error in the query" . $result->error;
+				} else {
+					$rows_cont = $result->num_rows;
+					$row = $result->fetch_array(MYSQLI_ASSOC);
+					$link->close();
+					if($rows_cont==1){
+						$rows_cont=0;
+						echo "<script> window.location.assign('layoutR.php?email=".$usr_mail."');</script>";
+					} else 
+						echo "<script> alert('Authentication failure!') </script>";
+				}
+			} else echo "<script> alert('You have to enter your password!') </script>";
+		}
 	}
 ?>
   </body>
