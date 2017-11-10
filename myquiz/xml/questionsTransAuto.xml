@@ -39,4 +39,4 @@
 			<value>Errotariak</value>
 		</incorrectResponses>
 	</assessmentItem>
-<assessmentItem complexity="1" subject="animalia"><itemBody><p>Zein da mamifero handiena?</p></itemBody><correctResponse><value>Bale urdina</value></correctResponse><incorrectResponses><value>Elefantea</value><value>Girafa</value><value>Hipopotamoa</value></incorrectResponses></assessmentItem><assessmentItem complexity="5" subject="tontoa"><itemBody><p>Pepita existitzen da benetan?</p></itemBody><correctResponse><value>ez</value></correctResponse><incorrectResponses><value>bai</value><value>ez dakit</value><value>igual</value></incorrectResponses></assessmentItem></assessmentItems>
+<assessmentItem complexity="1" subject="animalia"><itemBody><p>Zein da mamifero handiena?</p></itemBody><correctResponse><value>Bale urdina</value></correctResponse><incorrectResponses><value>Elefantea</value><value>Girafa</value><value>Hipopotamoa</value></incorrectResponses></assessmentItem></assessmentItems>
