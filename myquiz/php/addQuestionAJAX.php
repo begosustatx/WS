@@ -1,6 +1,7 @@
 <?php
 	$irteera= "";
 	sleep(2);
+	$posta= $_GET['email'];
 	$testua=$_GET["testua"];
 	$zailtasun=$_GET["zailtasun"];
 	$gaiarloa=$_GET["gaiarloa"];
@@ -8,8 +9,6 @@
 	$eOker1=$_GET["eOker1"];
 	$eOker2=$_GET["eOker2"];
 	$eOker3=$_GET["eOker3"];
-	//posta nola bidali?? 
-	//argazkia ere bidali ahal izango da?
 	if (empty($testua) || empty($zailtasun) || empty($gaiarloa) || empty($eZuzen) || empty($eOker1) || empty($eOker2)|| empty($eOker3)){
 		echo "Berrigorrezko eremu guztiak bete";
 	}	
@@ -55,7 +54,7 @@
 					echo  "<br><p> Ondo txertatu da DB-an eta XML-ean.</p>";
 				}
 			} else { // Argazkia ez bada sartzen*/
-				$sql="INSERT INTO questions(testua, eZuzen, eOker1, eOker2, eOker3, zailtasun, gaiarloa) VALUES ('$testua', '$eZuzen', '$eOker1', '$eOker2', '$eOker3', '$zailtasun', '$gaiarloa')";
+				$sql="INSERT INTO questions(posta, testua, eZuzen, eOker1, eOker2, eOker3, zailtasun, gaiarloa) VALUES ('$posta', '$testua', '$eZuzen', '$eOker1', '$eOker2', '$eOker3', '$zailtasun', '$gaiarloa')";
 					
 				$ema = mysqli_query($link, $sql);
 				if(!$ema){
@@ -80,5 +79,4 @@
 			mysqli_close($link); // Konexioa itxi
 		}
 	}
-
 ?>

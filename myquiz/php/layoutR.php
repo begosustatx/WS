@@ -13,12 +13,24 @@
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
   </head>
-  <?php
-	$email=$_GET['email'];
-	if(!(isset($_GET['email'])) || empty($_GET['email']))
-		header("location: ../html/layout.html");
-  ?>
+  
   <body>
+	<?php
+	$email=$_GET['email'];
+	if(!(isset($_GET['email'])) && empty($_GET['email']))
+		echo "<script> window.location.assign('../html/layout.html');</script>";
+	include 'dbconfig.php';
+	$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
+	$sql="SELECT * FROM erabiltzaileak WHERE posta = '$email'";
+	if($ema=mysqli_query($link, $sql)){
+		$dago=mysqli_num_rows($ema);
+		mysqli_close($link); // Konexioa itxi
+		if($dago==0) // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
+			echo "<script> window.location.assign('../html/layout.html');</script>"; 
+		mysqli_free_result($ema);
+	}
+  ?>
+
   <div id='page-wrap'>
 	<header class='main' id='h1'>
 	<div class="right">
@@ -31,6 +43,7 @@
 		<span><a href='layoutR.php?email=<?php echo $email;?>'>Home</a></span>
 		<span><a href='/quizzes'>Quizzes</a></span>
 		<span><a href='handlingQuizes.php?email=<?php echo $email;?>'>Handle a Quizz</a></span>
+		<span><a href='addQuestionWithImage.php?email=<?php echo $email;?>'>Add Question</a></span>
 		<span><a href='showQuestionsWithImages.php?email=<?php echo $email;?>'>Show Questions</a></span>
 		<span><a href='creditsR.php?email=<?php echo $email;?>'>Credits</a></span>
 	</nav>

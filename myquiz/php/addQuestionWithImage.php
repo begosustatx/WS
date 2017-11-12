@@ -83,6 +83,7 @@
 		<nav class='main' id='n1' role='navigation'>
 			<span><a href='layoutR.php?email=<?php echo $posta;?>'>Home</a></span>
 			<span><a href='/quizzes'>Quizzes</a></span>
+			<span><a href='handlingQuizes.php?email=<?php echo $posta;?>'>Handle a Quizz</a></span>
 			<span><a href='addQuestionWithImage.php?email=<?php echo $posta;?>'>Add Question</a></span>
 			<span><a href='showQuestionsWithImages.php?email=<?php echo $posta;?>'>Show Questions</a></span>
 			<span><a href='creditsR.php?email=<?php echo $posta;?>'>Credits</a></span>

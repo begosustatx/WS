@@ -46,37 +46,24 @@
 	});
    </script>
 <script type="text/javascript" language = "javascript">
-
 		function galderakIkusi(){
 			var xhro = new  XMLHttpRequest;
-			var testua=document.getElementById('testua').value;
-			var gaiarloa=document.getElementById('gaiarloa').value;
-			var zailtasun=document.getElementById('zailtasun').value;
-			var eZuzen=document.getElementById('eZuzen').value;
-			var eOker1=document.getElementById('eOker1').value;
-			var eOker2=document.getElementById('eOker2').value;
-			var eOker3=document.getElementById('eOker3').value;
-			ruta="showQuestionsAJAX.php";
-			envio1="testua="+testua;
-			envio2="gaiarloa="+gaiarloa;
-			envio3="zailtasun="+zailtasun;
-			envio4="eZuzen="+eZuzen;
-			envio5="eOker1="+eOker1;
-			envio6="eOker2="+eOker2;
-			envio7="eOker3="+eOker3;
-			url=ruta+"?"+envio1+"&"+envio2+"&"+envio3+"&"+envio4+"&"+envio5+"&"+envio6+"&"+envio7;
+			var email;
+			url="showQuestionsAJAX.php";
 			xhro.onreadystatechange = function(){
-				alert(xhro.readyState);
+				console.log("Ikusiren status: "+xhro.readyState);
 				if ((xhro.readyState==4)&&(xhro.status==200 )){
 					document.getElementById("galderakIkusi").innerHTML= xhro.responseText;
-				}
+				} else
+					document.getElementById("galderakIkusi").innerHTML = "<img src='../img/loading.gif' width=50px>";
 			};
-			console.log("Funtzioaren barruan");
+			console.log("Ikusi funtzioaren barruan");
 			xhro.open("GET",url, true);
 			xhro.send();
 		}
 	function galderaGehitu(){
 			var xhro = new  XMLHttpRequest;
+			var email;
 			var testua=document.getElementById('testua').value;
 			var gaiarloa=document.getElementById('gaiarloa').value;
 			var zailtasun=document.getElementById('zailtasun').value;
@@ -85,6 +72,8 @@
 			var eOker2=document.getElementById('eOker2').value;
 			var eOker3=document.getElementById('eOker3').value;
 			ruta="addQuestionAJAX.php";
+			email= "email="+getVariableFromQuery('email');
+			console.log("Email: "+ email);
 			envio1="testua="+testua;
 			envio2="gaiarloa="+gaiarloa;
 			envio3="zailtasun="+zailtasun;
@@ -92,21 +81,59 @@
 			envio5="eOker1="+eOker1;
 			envio6="eOker2="+eOker2;
 			envio7="eOker3="+eOker3;
-			url=ruta+"?"+envio1+"&"+envio2+"&"+envio3+"&"+envio4+"&"+envio5+"&"+envio6+"&"+envio7;
+			url=ruta+"?"+email+"&"+envio1+"&"+envio2+"&"+envio3+"&"+envio4+"&"+envio5+"&"+envio6+"&"+envio7;
 			xhro.onreadystatechange = function(){
-				alert(xhro.readyState);
+				console.log("Gehituren status: "+xhro.readyState);
 				if ((xhro.readyState==4)&&(xhro.status==200 )){
 					document.getElementById("galderaGehitu").innerHTML= xhro.responseText;
-				}
+				} else 
+					document.getElementById("galderaGehitu").innerHTML = "<img src='../img/loading.gif' width=50px>";
 			};
 			xhro.open("GET",url, true);
 			xhro.send();
 	}
+	
+	
+	function getVariableFromQuery(variable){
+		var query = window.location.search.substring(1);
+		var vars = query.split("&");
+		// console.log("vars: "+vars);
+		if(vars[0].search(variable)<0){
+			return false;
+		}
+		var i = vars[0].search("=");
+		// console.log("email position:" + i);
+		var pair = vars[0].slice(i+1);
+		// console.log("pair: "+pair);
+		return pair;
+		}
 </script>
-   <?php
-		$posta=$_GET['email'];
-	?>
+   
    <body>
+		<?php
+		$posta=$_GET['email'];
+		$posta = test_input($posta);
+		
+		if(!(isset($_GET['email'])) && empty($_GET['email']))
+			echo "<script> window.location.assign('../html/layout.html');</script>";
+		include 'dbconfig.php';
+		$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
+		$sql="SELECT * FROM erabiltzaileak WHERE posta = '$posta'";
+		if($ema=mysqli_query($link, $sql)){
+			$dago=mysqli_num_rows($ema);
+				echo "<script> console.log(".$dago.");</script>"; 
+			mysqli_close($link); // Konexioa itxi
+			if($dago==0) // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
+				echo "<script> window.location.assign('../html/layout.html');</script>"; 
+			mysqli_free_result($ema);
+		} 
+		function test_input($data) {
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data);
+		return $data;
+	}
+		?>
 		<div id='page-wrap'>
 		<header class='main' id='h1'>
 			<div class="right">
@@ -118,14 +145,13 @@
 		<nav class='main' id='n1' role='navigation'>
 			<span><a href='layoutR.php?email=<?php echo $posta;?>'>Home</a></span>
 			<span><a href='/quizzes'>Quizzes</a></span>
-			<span><a href='addQuestionWithImage.php?email=<?php echo $posta;?>'>Handle a Quizz</a></span>
+			<span><a href='handlingQuizes.php?email=<?php echo $posta;?>'>Handle a Quizz</a></span>
+			<span><a href='addQuestionWithImage.php?email=<?php echo $email;?>'>Add Question</a></span>
 			<span><a href='showQuestionsWithImages.php?email=<?php echo $posta;?>'>Show Questions</a></span>
 			<span><a href='creditsR.php?email=<?php echo $posta;?>'>Credits</a></span>
 		</nav>
 		<section class="main" id="s1">
 			<form id="galderaF" name="galderenF" method="post" enctype="multipart/form-data">
-				<input type="button" id="gehitu" name="gehitu" value="Galdera gehitu" onclick="galderaGehitu()"/>
-				<input type="button" id="ikusi" name="ikusi" value="Galderak ikusi" onclick="galderakIkusi()"/>
 				<p>Posta:</p>
 				<?php echo $posta;?>
 				<p>Galderaren testua:</p>
@@ -149,8 +175,10 @@
 				<img id="ikusiarg" src="" width="300px">
 				<br>
 				<input type="reset" id="reset" name="reset" value="Reset">
+				<input type="button" id="gehitu" name="gehitu" value="Galdera gehitu" onclick="galderaGehitu()"/>
+				<input type="button" id="ikusi" name="ikusi" value="Galderak ikusi" onclick="galderakIkusi()"/>
 			</form>
-			<div id="galderakIkusi" style="background-color:#99FF66;">
+			<div id="galderakIkusi" style="background-color:#99FF66">
 				<p>Galdera guztiak hemen ikusiko dira</p>
 			</div>
 			<div id="galderaGehitu" style="background-color:#99FF66;">
