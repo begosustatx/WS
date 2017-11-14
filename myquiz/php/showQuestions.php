@@ -1,16 +1,5 @@
 <?php
-    $local = 0;
-	if($local == 0 ){
-		$server="localhost";
-		$user="root";
-		$pass="";
-		$db="quiz";
-	} else {
-		$server="localhost";
-		$user="id2923223_apato001";
-		$pass="***";
-		$db="id2923223_quiz";
-	}
+	include 'dbconfig.php';
 	$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
 	if (mysqli_connect_errno()){
 		echo "Konexio hutxegitea MySQLra: " . mysqli_connect_error();

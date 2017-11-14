@@ -45,6 +45,7 @@
 			});
 	});
    </script>
+   <!-- Derrigorrezko atalaren script-ak -->
 <script type="text/javascript" language = "javascript">
 		function galderakIkusi(){
 			var xhro = new  XMLHttpRequest;
@@ -61,7 +62,7 @@
 			xhro.open("GET",url, true);
 			xhro.send();
 		}
-	function galderaGehitu(){
+		function galderaGehitu(){
 			var xhro = new  XMLHttpRequest;
 			var email;
 			var testua=document.getElementById('testua').value;
@@ -107,6 +108,33 @@
 		// console.log("pair: "+pair);
 		return pair;
 		}
+		
+		function startFunction(){
+			console.log("Hasierako funtzio barruan.");
+			setInterval(kopurua, 20000);
+		}
+		
+		function kopurua(){
+			var xhro = new  XMLHttpRequest;
+
+			var email = "email=" + getVariableFromQuery('email');
+			var url = "kontatuGalderakAJAX.php?"+email;
+			
+			xhro.onreadystatechange = function(){
+				console.log("Kopuruaren status: "+xhro.readyState);
+				if ((xhro.readyState==4)&&(xhro.status==200 )){
+					document.getElementById("galderaKop").innerHTML= xhro.responseText;
+				} else 
+					document.getElementById("galderaKop").innerHTML = "<img src='../img/loading.gif' width=50px>";
+			};
+			xhro.open("GET",url, true);
+			xhro.send();
+			// $('#galderaKop').html('<div><img src="../img/loading.gif" width="50px"/></div>');
+			// var jqxhr=$.get("kontatuGalderak.php", {email: email}, function(datuak, status){
+																// if(status="success")
+																	// $('#galderaKop').fadeIn().html(datuak);
+															// });
+		}
 </script>
    
    <body>
@@ -134,6 +162,8 @@
 		return $data;
 	}
 		?>
+		<script>startFunction();</script>
+			
 		<div id='page-wrap'>
 		<header class='main' id='h1'>
 			<div class="right">
@@ -151,6 +181,9 @@
 			<span><a href='creditsR.php?email=<?php echo $posta;?>'>Credits</a></span>
 		</nav>
 		<section class="main" id="s1">
+			Zure galderak /  Galdera guztira
+			<br>
+			<div id="galderaKop"></div>
 			<form id="galderaF" name="galderenF" method="post" enctype="multipart/form-data">
 				<p>Posta:</p>
 				<?php echo $posta;?>
