@@ -1,0 +1,2 @@
+Gure kasuan, bostgarren laborategi honen lehenengo hautazkoa egiteko php fitxategi berri bat sortu dugu, kontatuGalderakAJAX.php deitutakoa. Honek datu basetik hartzen ditu zenbat galdera dauden guztira eta pasatako postaren izenean dauden galderak eta irteera moduan bueltatzen dizkio handlingQuizes.php kodearen barruan kopurua() javascript funtzioari.
+kopurua() funtzioak 20 segunduro exekutatuko da setInterval javascripteko funtzioari esker eta AJAX-eko XMLHttpRequest berri bat sortuko du aipatutako php kodeari deituz.
