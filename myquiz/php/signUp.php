@@ -12,6 +12,29 @@
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
+  <script src="../js/jquery.min.js"></script>
+  <script>
+	$(document).ready(function(){
+		$('#posta').change(function(){
+			egiaztatuErabiltzailea($('#posta').val());
+		});
+		
+	});
+  </script>
+  <script type="text/javascript" language = "javascript">
+	function egiaztatuErabiltzailea(email){
+		var xhro = new  XMLHttpRequest;
+		var url="egiaztatuPasahitza.php?email="+email;
+		xhro.onreadystatechange = function(){
+				// console.log("Ikusiren status: "+xhro.readyState);
+				if ((xhro.readyState==4)&&(xhro.status==200 )){
+					document.getElementById("galderakIkusi").innerHTML= xhro.responseText;
+				};
+			// console.log("Ikusi funtzioaren barruan");
+			xhro.open("GET",url, true);
+			xhro.send();
+	}
+  </script>
   </head>
   <body>
 	<form method="post" id="signUp" name="signUp" enctype="multipart/form-data">
