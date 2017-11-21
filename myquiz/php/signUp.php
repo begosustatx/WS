@@ -22,17 +22,18 @@
 	});
   </script>
   <script type="text/javascript" language = "javascript">
+	var xhro = new  XMLHttpRequest;
 	function egiaztatuErabiltzailea(email){
-		var xhro = new  XMLHttpRequest;
-		var url="egiaztatuPasahitza.php?email="+email;
-		xhro.onreadystatechange = function(){
-				// console.log("Ikusiren status: "+xhro.readyState);
-				if ((xhro.readyState==4)&&(xhro.status==200 )){
-					document.getElementById("galderakIkusi").innerHTML= xhro.responseText;
-				};
-			// console.log("Ikusi funtzioaren barruan");
-			xhro.open("GET",url, true);
-			xhro.send();
+		console.log("egiaztatuErabiltzaile funtzioaren barruan");
+		var url="egiaztatuE.php?email="+email;
+		xhro.open("GET",url, true);
+		xhro.send();
+	}
+	xhro.onreadystatechange = function(){
+		console.log("ErabiltzaileE status: "+xhro.readyState);
+		if ((xhro.readyState==4)&&(xhro.status==200 )){
+			document.getElementById("erabiltzaileE").innerHTML= xhro.responseText;
+		}
 	}
   </script>
   </head>
@@ -51,9 +52,12 @@
 			<br>
 		<input type="submit" id="bidali" name="bidali" value="SignUp"/>
 	</form>
+	<span>
 	<a href="../html/layout.html">
 				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
-	</a>
+	</a></span>
+	<div id="erabiltzaileE">Eposta ...</div>
+	<div id="baliozkoP">Pasahitza ...</div>
 	<?php
 	include "dbconfig.php"; 
 	$link = new mysqli($server, $user, $pass, $db) or die ("Error while connecting to data base.");
