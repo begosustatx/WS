@@ -12,15 +12,16 @@
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
-  <script src="../js/jquery.min.js"></script>
-  <script>
-	$(document).ready(function(){
-		$('#posta').change(function(){
-			egiaztatuErabiltzailea($('#posta').val());
+
+	<script src="../js/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('#posta').change(function(){
+				egiaztatuErabiltzailea($('#posta').val());
+			});
+			
 		});
-		
-	});
-  </script>
+	  </script>
   <script type="text/javascript" language = "javascript">
 	var xhro = new  XMLHttpRequest;
 	function egiaztatuErabiltzailea(email){
@@ -36,6 +37,26 @@
 		}
 	}
   </script>
+  <script type="text/javascript" language = "javascript">
+	$(document).ready(function(){
+		$('#pass').change(function(){
+			egiaztatuPasahitza($('#pass').val());
+		});
+		
+	});
+  </script>
+  <script type="text/javascript" language = "javascript">
+		xhro = new XMLHttpRequest();
+		xhro.onreadystatechange = function(){
+			if ((xhro.readyState==4)&&(xhro.status==200 )){ 
+				document.getElementById("pasahitza").innerHTML= xhro.responseText;
+			}
+		}
+		function egiaztatuPasahitza(pass){
+			xhro.open("GET","egiaztatuPasahitza.php?pass="+pass, true);			
+			xhro.send();
+		}
+  </script>
   </head>
   <body>
 	<form method="post" id="signUp" name="signUp" enctype="multipart/form-data">
@@ -43,8 +64,10 @@
 		<br>
 		Deitura: <input type="text" name="deitura" id="deitura" pattern="[A-Z][a-z]+[\s][a-z\s]*[A-Z][a-z][\sa-z]*"  /><br>
 		Nick: <input type="text" name="nick" id="nick" pattern="^[A-Za-z]{1,}$"/><br>
-		Password: <input type="password" name="pass" id="pass"/><br>
+		Password: <input type="password" name="pass" id="pass"/> <div id="pasahitza"></div><br>
 		Password-a errepikatu: <input type="password" name="pass2" /><br>
+		<div class="pasahitza">
+		</div>
 		<p class="argazkia"><label for="argazkia"> Irudia: </label>
 			<input type="file" id="argazkia" name="argazkia"/>
 			</p>
@@ -52,12 +75,9 @@
 			<br>
 		<input type="submit" id="bidali" name="bidali" value="SignUp"/>
 	</form>
-	<span>
 	<a href="../html/layout.html">
 				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
-	</a></span>
-	<div id="erabiltzaileE">Eposta ...</div>
-	<div id="baliozkoP">Pasahitza ...</div>
+	</a>
 	<?php
 	include "dbconfig.php"; 
 	$link = new mysqli($server, $user, $pass, $db) or die ("Error while connecting to data base.");
@@ -66,7 +86,7 @@
 	{ 
 		if($_POST['posta'] == '' or $_POST['deitura'] == '' or $_POST['nick'] == ''or $_POST['pass'] == ''or $_POST['pass2'] == '')
 		{ 
-			echo 'Beharrezko datu guztiak sartu behar dituzu';
+			echo "<script> alert('Beharrezko datu guztiak sartu behar dituzu');</script>";
 		} else {
 			$patroia='/^[a-z]{2,}[0-9]{3}@ikasle\.ehu\.(eus|es)$/';
 			if(!preg_match($patroia,$_POST['posta'])){
@@ -122,12 +142,12 @@
 				} 
 				else 
 				{ 
-					echo 'Pasahitzak berdinak izan behar dira eta 6 karaktere baino gehiago izan'; 
+					echo "<script> alert('Pasahitzak berdinak izan behar dira eta 6 karaktere baino gehiago izan'); </script>"; 
 				} 
 			} 
 			else 
 			{ 
-				echo 'Sartutako postarekin badago beste erabiltzaile bat erregistratua'; 
+				echo "<script> alert('Pasahitzak berdinak izan behar dira eta 6 karaktere baino gehiago izan'); </script>";
 			} 
 		mysqli_close($link); // Konexioa itxi
 	}
