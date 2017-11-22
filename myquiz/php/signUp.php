@@ -118,7 +118,8 @@
 							$img_tmp = $_FILES['argazkia']['tmp_name']; // Argazkiaren PATH.
 							$mota = $_FILES['argazkia']['type']; // Argazkiaren mota.
 							$imgData = mysqli_escape_string($link, file_get_contents($img_tmp));
-							$sql="INSERT INTO erabiltzaileak(posta, deitura, nick, pasahitza, argazkia, argazki_mota) VALUES ('$_POST[posta]', '$_POST[deitura]','$_POST[nick]', '$_POST[pass]','$imgData', '$mota')";
+							$hash = crypt($_POST['pass']);
+							$sql="INSERT INTO erabiltzaileak(posta, deitura, nick, pasahitza, argazkia, argazki_mota) VALUES ('$_POST[posta]', '$_POST[deitura]','$_POST[nick]', '$hash','$imgData', '$mota')";
 							$ema = mysqli_query($link, $sql);
 							if(!$ema){
 								echo "<script> alert('Errorea query-a gauzatzerakoan: " . mysqli_error($link)."');</script>";
@@ -131,7 +132,9 @@
 				
 					}
 					else{
-						$sql="INSERT INTO erabiltzaileak(posta, deitura, nick, pasahitza) VALUES ('$_POST[posta]', '$_POST[deitura]','$_POST[nick]', '$_POST[pass]')"; 
+						
+						$hash = crypt($_POST['pass']);
+						$sql="INSERT INTO erabiltzaileak(posta, deitura, nick, pasahitza) VALUES ('$_POST[posta]', '$_POST[deitura]','$_POST[nick]', '$hash')"; 
 						$ema = mysqli_query($link, $sql);
 						if(!$ema){
 							echo "<script> alert('Errorea query-a gauzatzerakoan: " . mysqli_error($link)."');</script>";

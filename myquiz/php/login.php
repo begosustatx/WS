@@ -38,8 +38,8 @@
 		include 'dbconfig.php';
 		$link = new mysqli($server, $user, $pass, $db) or die ("Error while connecting to data base.");
 		if(isset($_POST['pass']) && !empty($_POST['pass'])){
-			$usr_pass=$_POST['pass'];
-			$sql="SELECT * FROM erabiltzaileak WHERE posta='$usr_mail' and pasahitza='$usr_pass'";
+			$password = crypt($_POST['pass']);
+			$sql="SELECT * FROM erabiltzaileak WHERE posta='$usr_mail' and pasahitza='$password'";
 			$result=$link->query($sql);
 			if(!($result)){
 				echo "Error in the query" . $result->error;
