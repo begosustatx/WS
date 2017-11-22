@@ -32,8 +32,9 @@
 	</a>
 	<?php
 	if(isset($_POST['posta']) && !empty($_POST['posta'])){
+		$usr_mail=$_POST['posta'];
 		$patroia='/^[a-z]{2,}[0-9]{3}@ikasle\.ehu\.(eus|es)$/';
-		if(!preg_match($patroia,$_POST['posta'])){
+		if(!preg_match($patroia,$usr_mail)){
 				echo "<script> alert('Posta okerra')</script>";
 		} else {		
 			$usr_mail=$_POST['posta'];

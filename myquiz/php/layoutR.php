@@ -16,17 +16,23 @@
   
   <body>
 	<?php
-	$email=$_GET['email'];
-	if(!(isset($_GET['email'])) && empty($_GET['email']))
-		echo "<script> window.location.assign('../html/layout.html');</script>";
+	
 	include 'dbconfig.php';
+	include 'segurtasunaIkasle.php';
+	$posta=$_SESSION['mail'];
+	
+	if(!isset($posta) && empty($posta))
+		echo "<script> window.location.assign('../html/layout.html');</script>";
+	
 	$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
-	$sql="SELECT * FROM erabiltzaileak WHERE posta = '$email'";
+	$sql="SELECT * FROM erabiltzaileak WHERE posta = '$posta'";
 	if($ema=mysqli_query($link, $sql)){
 		$dago=mysqli_num_rows($ema);
 		mysqli_close($link); // Konexioa itxi
-		if($dago==0) // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
+		if($dago==0){ // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
+			echo "<script> alert('Erabiltzailea ez dago erregistratuta') </script>";
 			echo "<script> window.location.assign('../html/layout.html');</script>"; 
+		}
 		mysqli_free_result($ema);
 	}
   ?>
@@ -34,18 +40,18 @@
   <div id='page-wrap'>
 	<header class='main' id='h1'>
 	<div class="right">
-      <span><a href="logOut.php?email=<?php echo $email; ?>">LogOut</a> </span>
-	  <span> Hello <?php echo $email; ?> :)</span>
+      <span><a href="logOut.php">LogOut</a> </span>
+	  <span> Hello <?php echo $posta; ?> :)</span>
 	</div>
 	<h2>Quiz: crazy questions</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href='layoutR.php?email=<?php echo $email;?>'>Home</a></span>
+		<span><a href='layoutR.php'>Home</a></span>
 		<span><a href='/quizzes'>Quizzes</a></span>
-		<span><a href='handlingQuizes.php?email=<?php echo $email;?>'>Handle a Quizz</a></span>
-		<span><a href='addQuestionWithImage.php?email=<?php echo $email;?>'>Add Question</a></span>
-		<span><a href='showQuestionsWithImages.php?email=<?php echo $email;?>'>Show Questions</a></span>
-		<span><a href='creditsR.php?email=<?php echo $email;?>'>Credits</a></span>
+		<span><a href='handlingQuizes.php'>Handle a Quizz</a></span>
+		<span><a href='addQuestionWithImage.php'>Add Question</a></span>
+		<span><a href='showQuestionsWithImages.php'>Show Questions</a></span>
+		<span><a href='creditsR.php'>Credits</a></span>
 	</nav>
     <section class="main" id="s1">
     

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>Show Quizzes</title>
+	<title>Reviewing Quizes</title>
     <link rel='stylesheet' type='text/css' href='../stylesPWS/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
@@ -51,6 +51,18 @@
 		session_start();
 		$email=$_SESSION['mail'];
 		// Hemen irakaslea dela konprobatu behar da ere.
+		if(!(isset($_GET['email'])) && empty($_GET['email']))
+			echo "<script> window.location.assign('../html/layout.html');</script>";
+		include 'dbconfig.php';
+		$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
+		$sql="SELECT * FROM erabiltzaileak WHERE posta = '$email'";
+		if($ema=mysqli_query($link, $sql)){
+			$dago=mysqli_num_rows($ema);
+			mysqli_close($link); // Konexioa itxi
+			if($dago==0) // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
+				echo "<script> window.location.assign('../html/layout.html');</script>"; 
+			mysqli_free_result($ema);
+		}	
 	?>
 	<header class='main' id='h1'>
 	<div class="right">

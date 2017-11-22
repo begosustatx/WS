@@ -1,3 +1,4 @@
+<?php include 'segurtasunaIkasle.php';?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -116,7 +117,6 @@
 		
 		function kopurua(){
 			var xhro = new  XMLHttpRequest;
-
 			var email = "email=" + getVariableFromQuery('email');
 			var url = "kontatuGalderakAJAX.php?"+email;
 			
@@ -139,12 +139,12 @@
    
    <body>
 		<?php
-		$posta=$_GET['email'];
-		$posta = test_input($posta);
 		
-		if(!(isset($_GET['email'])) && empty($_GET['email']))
-			echo "<script> window.location.assign('../html/layout.html');</script>";
 		include 'dbconfig.php';
+		$posta = $_SESSION['mail'];
+		
+		if(!(isset($posta)) && empty($posta))
+			echo "<script> window.location.assign('../html/layout.html');</script>";
 		$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
 		$sql="SELECT * FROM erabiltzaileak WHERE posta = '$posta'";
 		if($ema=mysqli_query($link, $sql)){
