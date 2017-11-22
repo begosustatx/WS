@@ -49,7 +49,8 @@
    
    <body>
    <?php
-		$posta=$_GET['email'];
+		session_start();
+		$posta=$SESSION['mail'];
 		$posta = test_input($posta);
 		
 		if(!(isset($_GET['email'])) && empty($_GET['email']))
@@ -66,16 +67,16 @@
 			mysqli_free_result($ema);
 		} 
 		function test_input($data) {
-		$data = trim($data);
-		$data = stripslashes($data);
-		$data = htmlspecialchars($data);
-		return $data;
-	}
+			$data = trim($data);
+			$data = stripslashes($data);
+			$data = htmlspecialchars($data);
+			return $data;
+		}
 	?>
 		<div id='page-wrap'>
 		<header class='main' id='h1'>
 			<div class="right">
-				<span><a href="logOut.php?email=<?php echo $posta; ?>">LogOut</a> </span>
+				<span><a href="logOut.php">LogOut</a> </span>
 				<span> Hello <?php echo $posta; ?> :)</span>
 			</div>
 			<h2>Quiz: crazy questions</h2>
@@ -175,7 +176,7 @@
 				$qIs->addChild('value', $_POST['eOker2']);
 				$qIs->addChild('value', $_POST['eOker3']);
 				$xml->asXML('../xml/questions.xml'); // Aldaketak XML fitxategian gorde
-				//$xml->asXML('../xml/questionsTransAuto.xml'); // Aldaketak XML fitxategian gorde
+				$xml->asXML('../xml/questionsTransAuto.xml'); // Aldaketak XML fitxategian gorde
 				echo  "<br><p> Ondo txertatu da.</p>";
 				//echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showXMLQuestions.php'>hemen</a></p>" ;
 				//echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='../xml/questionsTransAuto.xml'>hemen</a></p>" ;
@@ -202,7 +203,7 @@
 				$qIs->addChild('value', $_POST['eOker2']);
 				$qIs->addChild('value', $_POST['eOker3']);
 				$xml->asXML('../xml/questions.xml'); // Aldaketak XML fitxategian gorde
-				// $xml->asXML('../xml/questionsTransAuto.xml'); // Aldaketak XML fitxategian gorde
+				$xml->asXML('../xml/questionsTransAuto.xml'); // Aldaketak XML fitxategian gorde
 				// echo  "<br><p> Ondo txertatu da.</p>";
 				// echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showXMLQuestions.php'>hemen</a></p>" ;
 				// echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='../xml/questionsTransAuto.xml'>hemen</a></p>" ;

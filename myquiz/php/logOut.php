@@ -21,10 +21,10 @@
   </style>
   <body>
 	<?php
-	session_start (); 
-	$email=$_SESSION['mail'];
-	echo '<div> Bye ' . $email .' :)';
-	session_destroy(); 
+		session_start();
+		$email=$_SESSION['mail'];
+		session_destroy();
+		echo '<div> Bye ' . $email .' :)';
 	?>
 	<br>
 	<a href="../html/layout.html">Home</a>

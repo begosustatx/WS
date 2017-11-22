@@ -20,9 +20,9 @@
 				echo 'Email: <input type="email" name="posta" id="posta" value="' . $_GET['email'] . '" autofocus />';
 				
 			} else{
-				echo 'Email: <input type="email" name="posta" id="posta" placeholder="example@ikasle.ehu.es" autofocus />';
+				echo 'Email: <input type="email" name="posta" id="posta" pattern="^[a-z]{2,}[0-9]{3}@ikasle\.ehu\.(eus|es)$" placeholder="example@ikasle.ehu.es" autofocus />';
 			}
-?>
+		?>
 		<br>
 		Password: <input type="password" name="pass" id="pass"/>
 		<input type="submit" id="bidali" name="bidali" value="Login"/>
@@ -30,44 +30,35 @@
 	<a href="../html/layout.html">
 				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
 	</a>
-  </body>
-</html>
-<?php 
+	<?php
 	if(isset($_POST['posta']) && !empty($_POST['posta'])){
-		$usr_mail=$_POST['posta'];
-		include 'dbconfig.php';
-		$link = new mysqli($server, $user, $pass, $db) or die ("Error while connecting to data base.");
-		if(isset($_POST['pass']) && !empty($_POST['pass'])){
-			$password = crypt($_POST['pass']);
-			$sql="SELECT * FROM erabiltzaileak WHERE posta='$usr_mail' and pasahitza='$password'";
-			$result=$link->query($sql);
-			if(!($result)){
-				echo "Error in the query" . $result->error;
-			} else {
-				session_start (); 
-				$_SESSION['mail'] = $usr_mail;
-				if($usr_mail == 'web000@ehu.es'){
-					$_SESSION["kautotua"]= "IRAKASLEA";
-					header('location: layoutIra.php');
+		$patroia='/^[a-z]{2,}[0-9]{3}@ikasle\.ehu\.(eus|es)$/';
+		if(!preg_match($patroia,$_POST['posta'])){
+				echo "<script> alert('Posta okerra')</script>";
+		} else {		
+			$usr_mail=$_POST['posta'];
+			include 'dbconfig.php';
+			$link = new mysqli($server, $user, $pass, $db) or die ("Error while connecting to data base.");
+			if(isset($_POST['pass']) && !empty($_POST['pass'])){
+				$password = crypt($_POST['pass']);
+				$sql="SELECT * FROM erabiltzaileak WHERE posta='$usr_mail' and pasahitza='$password'";
+				$result=$link->query($sql);
+				if(!($result)){
+					echo "Error in the query" . $result->error;
+				} else {
+					$rows_cont = $result->num_rows;
+					$row = $result->fetch_array(MYSQLI_ASSOC);
+					$link->close();
+					if($rows_cont==1){
+						$rows_cont=0;
+						echo "<script> window.location.assign('layoutR.php?email=".$usr_mail."');</script>";
+					} else 
+						echo "<script> alert('Authentication failure!') </script>";
 				}
-				else{
-					$_SESSION["kautotua"]= "IKASLEA";
-					header('location: layoutR.php');
-				}
-				$rows_cont = $result->num_rows;
-				$row = $result->fetch_array(MYSQLI_ASSOC);
-				$link->close();
-				if($rows_cont==1){
-					$rows_cont=0;
-					$xml = simplexml_load_file('../xml/counter.xml'); 
-					//$kont = $xml->addChild('counter');
-					$posta = $xml->addChild('count');
-					$posta->addChild('posta', $usr_mail);
-					$xml->asXML('../xml/counter.xml');
-					
-				} else 
-					echo "<script> alert('Authentication failure!') </script>";
-			}
-		} else echo "<script> alert('You have to enter your password!') </script>";
+			} else echo "<script> alert('You have to enter your password!') </script>";
+		}
 	}
 ?>
+  </body>
+  
+</html>

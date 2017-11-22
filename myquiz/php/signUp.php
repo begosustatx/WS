@@ -78,9 +78,6 @@
 	<a href="../html/layout.html">
 				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
 	</a>
-	</a></span>
- 	<div id="erabiltzaileE">Eposta ...</div>
-
 	<?php
 	include "dbconfig.php"; 
 	$link = new mysqli($server, $user, $pass, $db) or die ("Error while connecting to data base.");
@@ -118,7 +115,7 @@
 							$img_tmp = $_FILES['argazkia']['tmp_name']; // Argazkiaren PATH.
 							$mota = $_FILES['argazkia']['type']; // Argazkiaren mota.
 							$imgData = mysqli_escape_string($link, file_get_contents($img_tmp));
-							$hash = crypt($_POST['pass']);
+							$hash = crypt($_POST['pass']); // Pasahitza enkritatu
 							$sql="INSERT INTO erabiltzaileak(posta, deitura, nick, pasahitza, argazkia, argazki_mota) VALUES ('$_POST[posta]', '$_POST[deitura]','$_POST[nick]', '$hash','$imgData', '$mota')";
 							$ema = mysqli_query($link, $sql);
 							if(!$ema){
@@ -132,9 +129,8 @@
 				
 					}
 					else{
-						
-						$hash = crypt($_POST['pass']);
-						$sql="INSERT INTO erabiltzaileak(posta, deitura, nick, pasahitza) VALUES ('$_POST[posta]', '$_POST[deitura]','$_POST[nick]', '$hash')"; 
+						$hash = crypt($_POST['pass']); // Pasahitza enkritatu
+						$sql="INSERT INTO erabiltzaileak(posta, deitura, nick, pasahitza) VALUES ('$_POST[posta]', '$_POST[deitura]','$_POST[nick]', '$hash')";
 						$ema = mysqli_query($link, $sql);
 						if(!$ema){
 							echo "<script> alert('Errorea query-a gauzatzerakoan: " . mysqli_error($link)."');</script>";
