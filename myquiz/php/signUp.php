@@ -78,6 +78,9 @@
 	<a href="../html/layout.html">
 				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
 	</a>
+	</a></span>
+ 	<div id="erabiltzaileE">Eposta ...</div>
+
 	<?php
 	include "dbconfig.php"; 
 	$link = new mysqli($server, $user, $pass, $db) or die ("Error while connecting to data base.");
