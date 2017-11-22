@@ -18,7 +18,7 @@
 	<?php
 	
 	include 'dbconfig.php';
-	include 'segurtasunaIkasle.php';
+	include 'segurtasunaIrakasle.php';
 	$posta=$_SESSION['mail'];
 	
 	if(!isset($posta) && empty($posta))
@@ -48,7 +48,7 @@
 	<nav class='main' id='n1' role='navigation'>
 		<span><a href='layoutR.php'>Home</a></span>
 		<span><a href='/quizzes'>Quizzes</a></span>
-		<span><a href='handlingQuizes.php'>Handle a Quizz</a></span>
+		<span><a href='reviewingQuizes.php'>Review a Quizz</a></span>
 		<span><a href='addQuestionWithImage.php'>Add Question</a></span>
 		<span><a href='showQuestionsWithImages.php'>Show Questions</a></span>
 		<span><a href='creditsR.php'>Credits</a></span>
