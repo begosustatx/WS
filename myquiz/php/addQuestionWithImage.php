@@ -50,22 +50,30 @@
    <body>
    <?php
 		session_start();
-		$posta=$SESSION['mail'];
+		include 'dbconfig.php';
+		require_once('segurtasuna.php');
+		
+		$posta=$_SESSION['mail'];
 		$posta = test_input($posta);
 		
-		if(!(isset($_GET['email'])) && empty($_GET['email']))
+		if(!isset($posta) && empty($posta))
 			echo "<script> window.location.assign('../html/layout.html');</script>";
-		include 'dbconfig.php';
+
+		// Konprobatu erabiltzailea ikasle moduan kautotuta dagoela.
+		segurtasunaIkaslea();
+
+		// Konprobatu erabiltzailea datu basean dagoen.
 		$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
 		$sql="SELECT * FROM erabiltzaileak WHERE posta = '$posta'";
 		if($ema=mysqli_query($link, $sql)){
 			$dago=mysqli_num_rows($ema);
-				echo "<script> console.log(".$dago.");</script>"; 
 			mysqli_close($link); // Konexioa itxi
-			if($dago==0) // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
+			if($dago==0){ // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
+				echo "<script> alert('Erabiltzailea ez dago erregistratuta') </script>";
 				echo "<script> window.location.assign('../html/layout.html');</script>"; 
+			}
 			mysqli_free_result($ema);
-		} 
+		}
 		function test_input($data) {
 			$data = trim($data);
 			$data = stripslashes($data);
@@ -82,12 +90,12 @@
 			<h2>Quiz: crazy questions</h2>
 		</header>
 		<nav class='main' id='n1' role='navigation'>
-			<span><a href='layoutR.php?email=<?php echo $posta;?>'>Home</a></span>
+			<span><a href='layoutR.php'>Home</a></span>
 			<span><a href='/quizzes'>Quizzes</a></span>
-			<span><a href='handlingQuizes.php?email=<?php echo $posta;?>'>Handle a Quizz</a></span>
-			<span><a href='addQuestionWithImage.php?email=<?php echo $posta;?>'>Add Question</a></span>
-			<span><a href='showQuestionsWithImages.php?email=<?php echo $posta;?>'>Show Questions</a></span>
-			<span><a href='creditsR.php?email=<?php echo $posta;?>'>Credits</a></span>
+			<span><a href='handlingQuizes.php'>Handle a Quizz</a></span>
+			<span><a href='addQuestionWithImage.php'>Add Question</a></span>
+			<span><a href='showQuestionsWithImages.php'>Show Questions</a></span>
+			<span><a href='creditsR.php'>Credits</a></span>
 		</nav>
 		<section class="main" id="s1">
 			<form id="galderaF" name="galderenF" method="post" enctype="multipart/form-data">

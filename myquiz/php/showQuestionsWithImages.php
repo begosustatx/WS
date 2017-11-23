@@ -16,28 +16,39 @@
   
   <body>
 	<?php
-	$email=$_GET['email'];
-	if(!(isset($_GET['email'])) && empty($_GET['email']))
-		echo "<script> window.location.assign('../html/layout.html');</script>";
+	session_start();
 	include 'dbconfig.php';
+	require_once('segurtasuna.php');
+	
+	$posta=$_SESSION['mail'];
+	
+	if(!isset($posta) && empty($posta))
+		echo "<script> window.location.assign('../html/layout.html');</script>";
+
+	// Konprobatu erabiltzailea ikasle moduan kautotuta dagoela.
+	segurtasunaIkaslea();
+
+	// Konprobatu erabiltzailea datu basean dagoen.
 	$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
-	$sql="SELECT * FROM erabiltzaileak WHERE posta = '$email'";
+	$sql="SELECT * FROM erabiltzaileak WHERE posta = '$posta'";
 	if($ema=mysqli_query($link, $sql)){
-			$dago=mysqli_num_rows($ema);
-			mysqli_close($link); // Konexioa itxi
-			if($dago==0) // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
+		$dago=mysqli_num_rows($ema);
+		mysqli_close($link); // Konexioa itxi
+		if($dago==0){ // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
+			echo "<script> alert('Erabiltzailea ez dago erregistratuta') </script>";
 			echo "<script> window.location.assign('../html/layout.html');</script>"; 
-			mysqli_free_result($ema);
-	} 
+		}
+		mysqli_free_result($ema);
+	}
 	?>
 	<header class='main' id='h1'>
 	<div class="right">
-      <span><a href="logOut.php?email=<?php echo $email; ?>">LogOut</a> </span>
-	  <span> Hello <?php echo $email; ?> :)</span>
+      <span><a href="logOut.php">LogOut</a> </span>
+	  <span> Hello <?php echo $posta; ?> :)</span>
 	</div>
 	<h2>Quiz: crazy questions</h2>
 	</header>
-	<a href="layoutR.php?email=<?php echo $email; ?>">
+	<a href="layoutR.php">
 		<img src="../img/back.png" style="width:42px;height:42px;border:0;">
 	</a>
 

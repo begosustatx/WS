@@ -60,14 +60,14 @@
   </head>
   <body>
 	<form method="post" id="signUp" name="signUp" enctype="multipart/form-data">
-		Email: <input type="email" name="posta" id="posta" pattern="^[a-z]{2,}[0-9]{3}@ikasle\.ehu\.(eus|es)$" placeholder="example@ikasle.ehu.es" autofocus />
+		Email: <input type="email" name="posta" id="posta" pattern="^[a-z]{2,}[0-9]{3}@(ikasle\.ehu|ehu)\.(eus|es)$" placeholder="example@ikasle.ehu.es" autofocus />
 		<br>
 		Deitura: <input type="text" name="deitura" id="deitura" pattern="[A-Z][a-z]+[\s][a-z\s]*[A-Z][a-z][\sa-z]*"  /><br>
 		Nick: <input type="text" name="nick" id="nick" pattern="^[A-Za-z]{1,}$"/><br>
-		Password: <input type="password" name="pass" id="pass"/> <div id="pasahitza"></div><br>
+		Password: <input type="password" name="pass" id="pass"/><br> 
 		Password-a errepikatu: <input type="password" name="pass2" /><br>
-		<div class="pasahitza">
-		</div>
+		<div id="pasahitza"></div><br>
+		
 		<p class="argazkia"><label for="argazkia"> Irudia: </label>
 			<input type="file" id="argazkia" name="argazkia"/>
 			</p>
@@ -88,7 +88,7 @@
 		{ 
 			echo "<script> alert('Beharrezko datu guztiak sartu behar dituzu');</script>";
 		} else {
-			$patroia='/^[a-z]{2,}[0-9]{3}@ikasle\.ehu\.(eus|es)$/';
+			$patroia='/^[a-z]{2,}[0-9]{3}@(ikasle\.ehu|ehu)\.(eus|es)$/';
 			if(!preg_match($patroia,$_POST['posta'])){
 				echo "<script> alert('Posta okerra');</script>";
 			}
@@ -115,7 +115,7 @@
 							$img_tmp = $_FILES['argazkia']['tmp_name']; // Argazkiaren PATH.
 							$mota = $_FILES['argazkia']['type']; // Argazkiaren mota.
 							$imgData = mysqli_escape_string($link, file_get_contents($img_tmp));
-							$hash = crypt($_POST['pass']); // Pasahitza enkritatu
+							$hash = crypt($_POST['pass'],'$5$rounds=5000$WebSistemak$'); // Pasahitza enkritatu
 							$sql="INSERT INTO erabiltzaileak(posta, deitura, nick, pasahitza, argazkia, argazki_mota) VALUES ('$_POST[posta]', '$_POST[deitura]','$_POST[nick]', '$hash','$imgData', '$mota')";
 							$ema = mysqli_query($link, $sql);
 							if(!$ema){
@@ -129,7 +129,7 @@
 				
 					}
 					else{
-						$hash = crypt($_POST['pass']); // Pasahitza enkritatu
+						$hash = crypt($_POST['pass'], '$5$rounds=5000$WebSistemak$'); // Pasahitza enkritatu
 						$sql="INSERT INTO erabiltzaileak(posta, deitura, nick, pasahitza) VALUES ('$_POST[posta]', '$_POST[deitura]','$_POST[nick]', '$hash')";
 						$ema = mysqli_query($link, $sql);
 						if(!$ema){

@@ -16,6 +16,7 @@
 		table {border-collapse: collapse;}
 		th {background-color:#b3daff;}
 		tr:hover {background-color: #ffffff;}
+		td {padding: 10px;}
 		#aldatu {text-align: center;}
 		#galderak {padding: 20px; display: none; text-align: center;}
 		#aukeratua {padding: 20px; display: none; text-align: center;}
@@ -25,11 +26,12 @@
 		$(document).ready(function(){
 			xhro = new XMLHttpRequest();
 			$('tr').click(function(){
-				alert("Taula clickatua.");
+				//alert("Taula clickatua.");
 				$('#galderak').slideDown();
+				$('body, html').animate({scrollTop: '0px'}, "slow");
 			});
 			$('#aldatu').click(function(){
-				$('#galderak').slideDown();
+				$('#galderak').slideToggle();
 			});
 			$('#testua').change(function(){
 				var testua = $('#testua').val();
@@ -49,10 +51,13 @@
   <body>
 	<?php 
 		session_start();
-		$email=$_SESSION['mail'];
-		// Hemen irakaslea dela konprobatu behar da ere.
-		if(!(isset($_GET['email'])) && empty($_GET['email']))
+		require_once('segurtasuna.php');
+		if(!(isset($_SESSION['mail'])) && empty($_SESSION['mail']))
 			echo "<script> window.location.assign('../html/layout.html');</script>";
+		$email=$_SESSION['mail'];
+		// Irakaslea dela konprobatu.
+		segurtasunaIrakaslea();
+		
 		include 'dbconfig.php';
 		$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
 		$sql="SELECT * FROM erabiltzaileak WHERE posta = '$email'";
@@ -71,7 +76,10 @@
 	</div>
 	<h2>Quiz: crazy questions</h2>
 	</header>
-	<div id="aldatu" name="aldatu">Aldatu galderak</div>
+	<a href="layoutR.php">
+		<img src="../img/back.png" style="width:42px;height:42px;border:0;">
+	</a>
+	<div id="aldatu" name="aldatu">▼ Aldatu galderak ▼ </div>
 	<div id="galderak" name="galderak">
 	<?php
 		include 'dbconfig.php';
@@ -107,4 +115,7 @@
 		echo '</table></div>';
 		mysqli_close($link); // Konexioa itxi
 	?>
+	<a href="layoutR.php">
+		<img src="../img/back.png" style="width:42px;height:42px;border:0;">
+	</a>
   </body>
