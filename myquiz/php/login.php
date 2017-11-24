@@ -26,6 +26,7 @@
 		<br>
 		Password: <input type="password" name="pass" id="pass"/>
 		<input type="submit" id="bidali" name="bidali" value="Login"/>
+		<a href="pasahitzaBerreskuratu.php">Have you forgotten your password?</a>
 	</form>
 	<a href="../html/layout.html">
 				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
