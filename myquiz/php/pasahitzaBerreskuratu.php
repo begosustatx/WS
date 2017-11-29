@@ -21,16 +21,43 @@
 		<input type="submit" id="botoia" name="botoia" value="Send"/>
 	</form>
 <?php
+
 	if(isset($_POST['posta']) && !empty($_POST['posta'])){
 		// Zihurtatu email hori datu-basean dagoela.
+		include 'dbconfig.php';
+		$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
+		$to = $_POST['posta'];
+		$sql="SELECT * FROM erabiltzaileak WHERE posta = '$to'";
 		
+		if($ema=mysqli_query($link, $sql)){
+			$dago=mysqli_num_rows($ema);
+			
+			if($dago==0){ // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
+				echo "<script> alert('Erabiltzailea ez dago erregistratuta') </script>";
+				echo "<script> window.location.assign('../html/layout.html');</script>"; 
+				exit();
+			}
+			mysqli_free_result($ema);
+		}
+	
 		// mail-a bidaltzeko datuak:
+		$pasahitzBerria='12345abcd';
 		$to = $_POST['posta'];
 		$subject = "Restore password";
-		$msg = "You can't restore your password in this link <a href=''></a>";
+		$msg = "Your new password will be ".$pasahitzBerria.", please change it once you get in.";
 		$header = "From: webmaster@quizzes.com";
-		if(!mail($to, $subject, $msg, $header))
+		$bidali=mail($to, $subject, $msg, $header);
+
+		if(!$bidali)
 			echo "<script> alert('Error sending the restore mail.');</script>";
+		else{
+			$sql="UPDATE  erabiltzaileak  SET pasahitza='$pasahitzBerria' WHERE posta ='$to'";
+			mysqli_query($link, $sql);
+			echo "<script> alert('Mail sent.');</script>";
+			mysqli_close($link); // Konexioa itxi
+			echo "<script> window.location.assign('../php/login.php');</script>"; 
+			
+		}
 	}
 ?>
   </body>
