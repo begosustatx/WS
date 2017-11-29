@@ -20,8 +20,10 @@
 		<input type="text" id="posta" name="posta"/>
 		<input type="submit" id="botoia" name="botoia" value="Send"/>
 	</form>
+	<a href="login.php">
+				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
+	</a>
 <?php
-
 	if(isset($_POST['posta']) && !empty($_POST['posta'])){
 		// Zihurtatu email hori datu-basean dagoela.
 		include 'dbconfig.php';
@@ -33,8 +35,7 @@
 			$dago=mysqli_num_rows($ema);
 			
 			if($dago==0){ // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
-				echo "<script> alert('Erabiltzailea ez dago erregistratuta') </script>";
-				echo "<script> window.location.assign('../html/layout.html');</script>"; 
+				echo "<script> alert('Erabiltzailea hori ez dago erregistratuta') </script>";
 				exit();
 			}
 			mysqli_free_result($ema);
@@ -47,7 +48,6 @@
 		$msg = "Your new password will be ".$pasahitzBerria.", please change it once you get in.";
 		$header = "From: webmaster@quizzes.com";
 		$bidali=mail($to, $subject, $msg, $header);
-
 		if(!$bidali)
 			echo "<script> alert('Error sending the restore mail.');</script>";
 		else{

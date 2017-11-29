@@ -22,7 +22,7 @@
 	
 	$posta=$_SESSION['mail'];
 	
-	if(!isset($posta) && empty($posta))
+	if(!isset($_SESSION['mail']) && empty($_SESSION['mail']))
 		echo "<script> window.location.assign('../html/layout.html');</script>";
 
 	// Konprobatu erabiltzailea ikasle moduan kautotuta dagoela.
