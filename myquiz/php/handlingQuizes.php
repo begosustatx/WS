@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php  include 'segurtasuna.php'; ?>
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
@@ -138,19 +139,18 @@
    
    <body>
 		<?php
-			session_start();
+			//session_start();
 			include 'dbconfig.php';
-			require_once('segurtasuna.php');
+			//require_once('segurtasuna.php');
+			
 		
 			$posta=$_SESSION['mail'];
 			$posta = test_input($posta);
 		
 			if(!isset($posta) && empty($posta))
 			echo "<script> window.location.assign('../html/layout.html');</script>";
-
 			// Konprobatu erabiltzailea ikasle moduan kautotuta dagoela.
 			segurtasunaIkaslea();
-
 			// Konprobatu erabiltzailea datu basean dagoen.
 			$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
 			$sql="SELECT * FROM erabiltzaileak WHERE posta = '$posta'";

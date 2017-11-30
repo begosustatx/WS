@@ -1,5 +1,5 @@
 <?php
-
+	session_start();
 	function segurtasunaIrakaslea(){
 		// Sesio hasiera kanpotik egiten da.
 		//session_start();

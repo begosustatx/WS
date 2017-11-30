@@ -51,7 +51,7 @@
   
   <body>
 	<?php 
-		session_start();
+		//session_start();
 		require_once('segurtasuna.php');
 		if(!(isset($_SESSION['mail'])) && empty($_SESSION['mail']))
 			echo "<script> window.location.assign('../html/layout.html');</script>";
