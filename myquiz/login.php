@@ -1,3 +1,4 @@
+<?php  session_start(); ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -56,8 +57,7 @@
 					$aurkitua = 0;
 					if($rows_cont==0) 
 						echo "<script> alert('Authentication failure!') </script>";
-						session_start();
-						
+
 						if (empty($_SESSION['count'.$usr_mail])) 
 							$_SESSION['count'.$usr_mail] = 1;
 						echo 'Saiakera kopurua:'.$_SESSION['count'.$usr_mail];
