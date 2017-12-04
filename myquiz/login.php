@@ -43,8 +43,10 @@
 			if(isset($_POST['pass']) && !empty($_POST['pass'])){
 				// Pasahitza enkriptatu:					
 				$password = crypt($_POST['pass'], '$5$rounds=5000$WebSistemak$');
-				$sql="SELECT pasahitza FROM erabiltzaileak";
-				$result=$link->query($sql);
+				$sql="SELECT pasahitza FROM erabiltzaileak WHERE posta='$usr_mail'";
+				$result=mysqli_query($link, $sql);
+				$row = mysqli_fetch_array($result);
+
 				
 				if(!($result)){
 					echo "Error in the query" . $result->error;
@@ -55,9 +57,10 @@
 					if($rows_cont==0) 
 						echo "<script> alert('Authentication failure!') </script>";
 						session_start();
-						echo $_SESSION['count'.$usr_mail];
+						
 						if (empty($_SESSION['count'.$usr_mail])) 
 							$_SESSION['count'.$usr_mail] = 1;
+						echo 'Saiakera kopurua:'.$_SESSION['count'.$usr_mail];
 						echo "<script>console.log('Kontagailua: ".$_SESSION['count'.$usr_mail]."');</script>";
 					// 3 saiakera baino gehiago egin badira, kontua blokeatuta geldituko da.
 					// Erabiltzaileak cachea garbitzen badu, sesioaren informazioa ere borratuko
@@ -69,8 +72,8 @@
 					}
 					else 
 					$_SESSION['count'.$usr_mail]++;
-					while($row = $result->fetch_array(MYSQLI_ASSOC)){
-						if(hash_equals($row['pasahitza'], $password)){ // Hau erabiltzea seguruagoa da.
+					//while($row = $result->fetch_array(MYSQLI_ASSOC)){
+						if($row['pasahitza']==$password){ // Hau erabiltzea seguruagoa da.
 							$aurkitua = 1;
 							$_SESSION['mail'] = $usr_mail;
 							if($usr_mail == 'web000@ehu.es'){
@@ -83,7 +86,7 @@
 								echo "<script> window.location.assign('layoutR.php');</script>";
 							}
 						}
-					}
+					//}
 					
 					$link->close(); // Konexioa itxi
 					if($aurkitua==0)
