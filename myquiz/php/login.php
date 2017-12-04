@@ -29,7 +29,7 @@
 		<a href="pasahitzaBerreskuratu.php">Have you forgotten your password?</a>
 	</form>
 	<a href="../html/layout.html">
-				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
+				<img src="../img/back.png" style="width:42px;height:42px;border:0;" onclick="sesioabukatu()">
 	</a>
 	<?php
 	if(isset($_POST['posta']) && !empty($_POST['posta'])){ // Zihurtatu posta ondo pasa dela eta patroia betetzen duela.
@@ -58,13 +58,15 @@
 						
 						if (empty($_SESSION['count'.$usr_mail])) 
 							$_SESSION['count'.$usr_mail] = 1;
+						echo 'Saiakera kopurua:'.$_SESSION['count'.$usr_mail];
 						echo "<script>console.log('Kontagailua: ".$_SESSION['count'.$usr_mail]."');</script>";
 					// 3 saiakera baino gehiago egin badira, kontua blokeatuta geldituko da.
 					// Erabiltzaileak cachea garbitzen badu, sesioaren informazioa ere borratuko
 					// denez, kontua desbloqueatuko da ere.
-					if ($_SESSION['count'.$usr_mail]>3){
+					if ($_SESSION['count'.$usr_mail]==3){
 						echo "<script> alert('Kontua blokeatuta')</script>";
 						echo "<script> window.location.assign('../html/layout.html');</script>";
+						session_destroy();
 					}
 					else 
 					$_SESSION['count'.$usr_mail]++;
@@ -83,6 +85,7 @@
 							}
 						}
 					}
+					
 					$link->close(); // Konexioa itxi
 					if($aurkitua==0)
 						echo "<script> alert('Authentication failure!') </script>";	
@@ -93,6 +96,7 @@
 			else echo "<script> alert('You have to enter your password!') </script>";
 		}
 	}
+	
 ?>
   </body>
   
