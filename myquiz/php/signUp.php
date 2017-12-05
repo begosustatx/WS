@@ -13,7 +13,7 @@
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
 
-	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery-3.2.1.js"></script>
 	<script>
 		$(document).ready(function(){
 			$('#posta').change(function(){
@@ -102,12 +102,12 @@
 			if(!preg_match($patroia,$_POST['deitura'])){
 				echo "<script> alert('Deitura okerra');</script>";
 			}
-			/*$soapclient1 = new nusoap_client('http://ehusw.es/rosa/webZerbitzuak/egiaztatuMatrikula.php?wsdl',true);
+			$soapclient1 = new nusoap_client('http://ehusw.es/rosa/webZerbitzuak/egiaztatuMatrikula.php?wsdl',true);
 			
 			$result1 = $soapclient1->call('egiaztatuE', array('x'=>$_POST['posta']));
 			if ($result1 == 'EZ'){
 				echo "<script> alert('Ez zaude matrikulatuta');</script>";
-			}*/
+			}
 			
 			$soapclient2 = new nusoap_client('http://localhost:1234/Lab/Lab5/php/egiaztatu.php?wsdl',true);
 			$result2 = $soapclient2->call('egiaztatu', array('x'=>$_POST['pass']));

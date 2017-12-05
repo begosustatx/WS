@@ -22,7 +22,7 @@
 		#galderak {padding: 20px; display: none; text-align: center;}
 		#aukeratua {padding: 20px; display: none; text-align: center;}
 	</style>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="../js/jquery-3.2.1.js"></script>
 	<script>
 		$(document).ready(function(){
 			xhro = new XMLHttpRequest();

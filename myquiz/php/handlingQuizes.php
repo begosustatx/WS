@@ -14,7 +14,7 @@
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
    </head>
-   <script src="../js/jquery.min.js"></script>
+   <script src="../js/jquery-3.2.1.js"></script>
    <script>
 	$(document).ready(function(){
 		/* Reseteatu irudia */
@@ -51,7 +51,7 @@
 		function galderakIkusi(){
 			var xhro = new  XMLHttpRequest;
 			var email;
-			url="showQuestionsAJAX.php";
+			url="showQuestionsWithImages.php";
 			xhro.onreadystatechange = function(){
 				console.log("Ikusiren status: "+xhro.readyState);
 				if ((xhro.readyState==4)&&(xhro.status==200 )){
@@ -111,7 +111,7 @@
 		}
 		
 		function startFunction(){
-			console.log("Hasierako funtzio barruan.");
+			// console.log("Hasierako funtzio barruan.");
 			setInterval(kopurua, 20000);
 		}
 		
@@ -121,7 +121,7 @@
 			var url = "kontatuGalderakAJAX.php?"+email;
 			
 			xhro.onreadystatechange = function(){
-				console.log("Kopuruaren status: "+xhro.readyState);
+				// console.log("Kopuruaren status: "+xhro.readyState);
 				if ((xhro.readyState==4)&&(xhro.status==200 )){
 					document.getElementById("galderaKop").innerHTML= xhro.responseText;
 				} else 
@@ -140,16 +140,18 @@
    <body>
 		<?php
 			include 'dbconfig.php';
-			
 		
-			$posta=$_SESSION['mail'];
-			$posta = test_input($posta);
-		
-			if(!isset($posta) && empty($posta))
-			echo "<script> window.location.assign('layout.php');</script>";
-
+			if(!isset($_SESSION['mail']) && empty($_SESSION['mail'])){
+				echo "<script> window.location.assign('layout.php');</script>";
+			}else {
+				$posta=$_SESSION['mail'];
+				$posta = test_input($posta);
+			}
 			// Konprobatu erabiltzailea ikasle moduan kautotuta dagoela.
-			segurtasunaIkaslea();
+			if(segurtasunaIkaslea()==0){
+				echo "<script>alert('Ez daukazu hemen egoteko baimenik!\nIrteten...');</script>";
+				echo "<script> window.location.assign('layout.php');</script>";
+			}
 
 			// Konprobatu erabiltzailea datu basean dagoen.
 			$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
@@ -159,7 +161,7 @@
 				mysqli_close($link); // Konexioa itxi
 				if($dago==0){ // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
 					echo "<script> alert('Erabiltzailea ez dago erregistratuta') </script>";
-					echo "<script> window.location.assign('../html/layout.html');</script>"; 
+					echo "<script> window.location.assign('layout.php');</script>"; 
 				}
 				mysqli_free_result($ema);
 			}
@@ -217,7 +219,7 @@
 				<input type="button" id="gehitu" name="gehitu" value="Galdera gehitu" onclick="galderaGehitu()"/>
 				<input type="button" id="ikusi" name="ikusi" value="Galderak ikusi" onclick="galderakIkusi()"/>
 			</form>
-			<div id="galderakIkusi" style="background-color:#99FF66">
+			<div id="galderakIkusi" style="background-color:#99FF66;overflow-x:auto;">
 				<p>Galdera guztiak hemen ikusiko dira</p>
 			</div>
 			<div id="galderaGehitu" style="background-color:#99FF66;">

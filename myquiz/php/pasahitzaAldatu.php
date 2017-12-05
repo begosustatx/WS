@@ -1,3 +1,4 @@
+<?php include 'segurtasuna.php';?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -52,7 +53,7 @@
   <?php
 	include 'dbconfig.php';
 	$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
-	include 'segurtasuna.php';
+	
 	
 	$posta=$_SESSION['mail'];
 	// Konprobatu erabiltzailea ikasle moduan kautotuta dagoela.

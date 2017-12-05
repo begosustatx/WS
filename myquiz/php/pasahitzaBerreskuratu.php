@@ -43,7 +43,7 @@
 	
 		// mail-a bidaltzeko datuak:
 		$pasahitzBerria='12345abcd';
-		$hash = crypt($pasahitzBerria, '$5$rounds=5000$17WS14T$'); // Pasahitza enkritatu
+		$hash = crypt($pasahitzBerria, '$5$rounds=5000$17WebSistemak$'); // Pasahitza enkritatu
 		$to = $_POST['posta'];
 		$subject = "Restore password";
 		$msg = "Your new password will be ".$pasahitzBerria.", please change it once you get in.";
