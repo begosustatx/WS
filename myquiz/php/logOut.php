@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -21,13 +22,12 @@
   </style>
   <body>
 	<?php
-		session_start();
 		$email=$_SESSION['mail'];
 		session_destroy();
 		echo '<div> Bye ' . $email .' :)';
 	?>
 	<br>
-	<a href="../html/layout.html">Home</a>
+	<a href="layout.php">Home</a>
 	</div>
   </body>
  </html>

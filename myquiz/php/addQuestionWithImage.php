@@ -1,3 +1,4 @@
+<?php include 'segurtasuna.php';?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -51,15 +52,16 @@
    <?php
 		//session_start();
 		include 'dbconfig.php';
-		require_once('segurtasuna.php');
 		
 		$posta=$_SESSION['mail'];
 		$posta = test_input($posta);
 		
 		if(!isset($posta) && empty($posta))
 			echo "<script> window.location.assign('../html/layout.html');</script>";
+
 		// Konprobatu erabiltzailea ikasle moduan kautotuta dagoela.
 		segurtasunaIkaslea();
+
 		// Konprobatu erabiltzailea datu basean dagoen.
 		$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
 		$sql="SELECT * FROM erabiltzaileak WHERE posta = '$posta'";
@@ -88,12 +90,12 @@
 			<h2>Quiz: crazy questions</h2>
 		</header>
 		<nav class='main' id='n1' role='navigation'>
-			<span><a href='layoutR.php'>Home</a></span>
+			<span><a href='layout.php'>Home</a></span>
 			<span><a href='/quizzes'>Quizzes</a></span>
 			<span><a href='handlingQuizes.php'>Handle a Quizz</a></span>
 			<span><a href='addQuestionWithImage.php'>Add Question</a></span>
 			<span><a href='showQuestionsWithImages.php'>Show Questions</a></span>
-			<span><a href='creditsR.php'>Credits</a></span>
+			<span><a href='credits.php'>Credits</a></span>
 		</nav>
 		<section class="main" id="s1">
 			<form id="galderaF" name="galderenF" method="post" enctype="multipart/form-data">

@@ -39,48 +39,53 @@
   <body>
 	<form method="post" id="signUp" name="signUp" >
 		
-		Password: <input type="password" name="pass" id="pass"/><br> 
+		Password zaharra: <input type="password" name="passZaha" id="pass"/><br> 
+		Password berria : <input type="password" name="pass" id="pass"/><br> 
 		Password-a errepikatu: <input type="password" name="pass2" /><br>
 		
 		<div id="pasahitza"></div><br>
 		<input type="submit" id="bidali" name="bidali" value="Gorde"/>
 	</form>
-	<a href="../php/layoutR.php">
+	<a href="../php/layout.php">
 				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
 	</a>
   <?php
-	//session_start();
 	include 'dbconfig.php';
-	//require_once('segurtasuna.php');
+	$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
 	include 'segurtasuna.php';
 	
 	$posta=$_SESSION['mail'];
 	// Konprobatu erabiltzailea ikasle moduan kautotuta dagoela.
 	segurtasunaIkaslea();
 	if(isset($_POST['bidali'])){
-		if($_POST['pass'] == '' or $_POST['pass2'] == ''){
+		if($_POST['pass'] == '' or $_POST['pass2'] == '' or $_POST['passZaha'] == ''){
 			echo "<script> alert('Eremu guztiak bete');</script>";
 		}
 		elseif(strlen($_POST['pass'])<5){
 			echo "<script> alert('Pasahitzak 6 karaktere gutxienez izan behar du');</script>";
 		}
+		
 		else{
-			if($_POST['pass']==$_POST['pass2']){
-				
-				$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
-				$sql="UPDATE erabiltzaileak SET pasahitza=$pass WHERE posta=$posta ";
-				$ema = mysqli_query($link, $sql);
-					if(!$ema){
-						echo "<script> alert('Errorea query-a gauzatzerakoan: " . mysqli_error($link)."');</script>";
-					}
-					else {
-						echo "<script> alert('Success. \n Going to home ...'); </script>";
-						echo "<script> window.location.assign('layoutR.php');</script>";
-					} 
-					mysqli_close($link); // Konexioa itxi
+			$sql="SELECT pasahitza FROM erabiltzaileak WHERE posta='$posta'";
+			$result=mysqli_query($link, $sql);
+			$row = mysqli_fetch_array($result);
+			$hash = crypt($_POST['passZaha'], '$5$rounds=5000$WebSistemak$');
+			if($row['pasahitza']!=$hash){ // Hau erabiltzea seguruagoa da.
+				echo "<script> alert('Pasahitza okerra');</script>";
 			}
 			else{
-				echo "<script> alert('Pasahitzak berdinak izan behar dira');</script>";
+				if($_POST['pass']==$_POST['pass2']){
+					 // Pasahitza enkritatu
+					$hash1 = crypt($_POST['pass'], '$5$rounds=5000$WebSistemak$');
+					$sql="UPDATE  erabiltzaileak  SET pasahitza='$hash1' WHERE posta ='$posta'";
+					mysqli_query($link, $sql);
+					echo "<script> alert('Pasahitza aldatuta');</script>";
+					mysqli_close($link); // Konexioa itxi
+					echo "<script> window.location.assign('layout.php');</script>"; 
+				}
+				else{
+					echo "<script> alert('Pasahitzak berdinak izan behar dira');</script>";
+				}
 			}
 		}
 	}

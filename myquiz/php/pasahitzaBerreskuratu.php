@@ -43,6 +43,7 @@
 	
 		// mail-a bidaltzeko datuak:
 		$pasahitzBerria='12345abcd';
+		$hash = crypt($pasahitzBerria, '$5$rounds=5000$17WS14T$'); // Pasahitza enkritatu
 		$to = $_POST['posta'];
 		$subject = "Restore password";
 		$msg = "Your new password will be ".$pasahitzBerria.", please change it once you get in.";
@@ -51,7 +52,7 @@
 		if(!$bidali)
 			echo "<script> alert('Error sending the restore mail.');</script>";
 		else{
-			$sql="UPDATE  erabiltzaileak  SET pasahitza='$pasahitzBerria' WHERE posta ='$to'";
+			$sql="UPDATE  erabiltzaileak  SET pasahitza='$hash' WHERE posta ='$to'";
 			mysqli_query($link, $sql);
 			echo "<script> alert('Mail sent.');</script>";
 			mysqli_close($link); // Konexioa itxi
@@ -59,9 +60,6 @@
 			
 		}
 	}
-?>
-  </body>
-</html>
 ?>
   </body>
 </html>

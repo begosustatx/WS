@@ -1,3 +1,4 @@
+<?php include 'segurtasuna.php';?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -16,16 +17,18 @@
   
   <body>
 	<?php
-	//session_start();
+
 	include 'dbconfig.php';
-	require_once('segurtasuna.php');
+	
 	
 	$posta=$_SESSION['mail'];
 	
 	if(!isset($posta) && empty($posta))
 		echo "<script> window.location.assign('../html/layout.html');</script>";
+
 	// Konprobatu erabiltzailea ikasle moduan kautotuta dagoela.
 	segurtasunaIkaslea();
+
 	// Konprobatu erabiltzailea datu basean dagoen.
 	$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
 	$sql="SELECT * FROM erabiltzaileak WHERE posta = '$posta'";

@@ -1,3 +1,4 @@
+<?php include 'segurtasuna.php';?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -51,8 +52,7 @@
   
   <body>
 	<?php 
-		//session_start();
-		require_once('segurtasuna.php');
+
 		if(!(isset($_SESSION['mail'])) && empty($_SESSION['mail']))
 			echo "<script> window.location.assign('../html/layout.html');</script>";
 		$email=$_SESSION['mail'];
@@ -77,7 +77,7 @@
 	</div>
 	<h2>Quiz: crazy questions</h2>
 	</header>
-	<a href="layoutR.php">
+	<a href="layout.php">
 		<img src="../img/back.png" style="width:42px;height:42px;border:0;">
 	</a>
 	<div id="aldatu" name="aldatu">▼ Aldatu galderak ▼ </div>
@@ -116,7 +116,7 @@
 		echo '</table></div>';
 		mysqli_close($link); // Konexioa itxi
 	?>
-	<a href="layoutR.php">
+	<a href="layout.php">
 		<img src="../img/back.png" style="width:42px;height:42px;border:0;">
 	</a>
   </body>

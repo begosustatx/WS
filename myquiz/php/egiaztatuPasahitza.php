@@ -1,15 +1,19 @@
 <?php
-$irteera= "Pasahitz baliozkoa";
-sleep(2);
-$pasahitza=$_GET['pass'];
-$badago=false;
-$ireki=fopen("../txt/toppasswords.txt","r") or die ("Error - Ezin izan da artxiboa ireki");
-while ($lerroa=fgets($ireki)){
-	if (strstr($lerroa,$pasahitza)){
-		$irteera= "Pasahitza oso ahula";
-		$badago=true;
-	}
+//nusoap.php klasea gehitzen dugu
+require_once('lib/nusoap.php');
+require_once('lib/class.wsdlcache.php');
+//soapclient motadun objektua sortzen dugu. 
+//erabiliko den SOAP zerbitzuanon dagoen zehazten url horrek
+$soapclient = new nusoap_client('http://localhost:1234/Lab/Lab5/php/egiaztatu.php?wsdl',true);
+$pass=$_GET['pass'];
+//Web-Service-n inplementatu dugun funtzioari dei egiten diogu
+//eta itzultzen diguna inprimatzen dugu
+$result = $soapclient->call('egiaztatu', array('x'=>$pass));
+$error = $soapclient->getError();
+if ($error) {
+    echo "<h2>Error</h2><pre>" . $error . "</pre>";
 }
-echo $irteera;
-fclose($ireki);
+else {
+    echo $result;
+}
 ?>

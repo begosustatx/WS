@@ -80,6 +80,8 @@
 	</a>
 	<?php
 	include "dbconfig.php"; 
+	require_once('lib/nusoap.php');
+	require_once('lib/class.wsdlcache.php');
 	$link = new mysqli($server, $user, $pass, $db) or die ("Error while connecting to data base.");
 	
 	if(isset($_POST['bidali']))
@@ -87,7 +89,8 @@
 		if($_POST['posta'] == '' or $_POST['deitura'] == '' or $_POST['nick'] == ''or $_POST['pass'] == ''or $_POST['pass2'] == '')
 		{ 
 			echo "<script> alert('Beharrezko datu guztiak sartu behar dituzu');</script>";
-		} else {
+		} 
+		else {
 			$patroia='/^[a-z]{2,}[0-9]{3}@(ikasle\.ehu|ehu)\.(eus|es)$/';
 			if(!preg_match($patroia,$_POST['posta'])){
 				echo "<script> alert('Posta okerra');</script>";
@@ -99,6 +102,18 @@
 			if(!preg_match($patroia,$_POST['deitura'])){
 				echo "<script> alert('Deitura okerra');</script>";
 			}
+			/*$soapclient1 = new nusoap_client('http://ehusw.es/rosa/webZerbitzuak/egiaztatuMatrikula.php?wsdl',true);
+			
+			$result1 = $soapclient1->call('egiaztatuE', array('x'=>$_POST['posta']));
+			if ($result1 == 'EZ'){
+				echo "<script> alert('Ez zaude matrikulatuta');</script>";
+			}*/
+			
+			$soapclient2 = new nusoap_client('http://localhost:1234/Lab/Lab5/php/egiaztatu.php?wsdl',true);
+			$result2 = $soapclient2->call('egiaztatu', array('x'=>$_POST['pass']));
+			if ($result2 == 'BALIOGABEA'){
+				echo "<script> alert('Pasahitza oso ahula');</script>";
+			}
 		}
 			$postak=mysqli_query($link, "select * from erabiltzaileak");			
 			$erabilKonprobatu = true;
@@ -108,7 +123,7 @@
 				} 
 			} 
 			if($erabilKonprobatu == true) { 
-				if($_POST['pass'] == $_POST['pass2'] and strlen($_POST['pass'])>5){  
+				if((strcmp($_POST['pass'], $_POST['pass2'])==0) and (strlen($_POST['pass'])>5)){  
 					if (is_uploaded_file($_FILES['argazkia']['tmp_name'])){
 						$onartuak = array("image/jpg", "image/jpeg", "image/gif", "image/png");
 						if(in_array($_FILES['argazkia']['type'], $onartuak)){ // Argazkia igo dela konprobatzeko
@@ -141,15 +156,14 @@
 							echo "<script> window.location.assign('login.php?email=" . $_POST['posta'] . "');</script>";
 						} 
 					}
-				} 
-				else 
+				} else 
 				{ 
-					echo "<script> alert('Pasahitzak berdinak izan behar dira eta 6 karaktere baino gehiago izan'); </script>"; 
+					echo "<script> alert('Pasahitzak berdinak izan behar dira eta 6 karaktere baino gehiago izan.'); </script>"; 
 				} 
 			} 
 			else 
 			{ 
-				echo "<script> alert('Pasahitzak berdinak izan behar dira eta 6 karaktere baino gehiago izan'); </script>";
+				echo "<script> alert('Dagoeneko existitzen da erabiltzaile hori.'); </script>";
 			} 
 		mysqli_close($link); // Konexioa itxi
 	}
