@@ -1,7 +1,7 @@
 <?php
-
-	$posta=$_GET['email'];
-	sleep(3);
+	include 'segurtasuna.php';
+	$posta=$_SESSION['mail'];
+	sleep(2);
 	include 'dbconfig.php';
 	$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
 	if (mysqli_connect_errno()){

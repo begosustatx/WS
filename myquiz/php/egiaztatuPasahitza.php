@@ -4,7 +4,7 @@ require_once('lib/nusoap.php');
 require_once('lib/class.wsdlcache.php');
 //soapclient motadun objektua sortzen dugu. 
 //erabiliko den SOAP zerbitzuanon dagoen zehazten url horrek
-$soapclient = new nusoap_client('http://localhost:1234/Lab/Lab5/php/egiaztatu.php?wsdl',true);
+$soapclient = new nusoap_client('http://localhost:1234/WS/myquiz/php/egiaztatu.php?wsdl',true);
 $pass=$_GET['pass'];
 //Web-Service-n inplementatu dugun funtzioari dei egiten diogu
 //eta itzultzen diguna inprimatzen dugu

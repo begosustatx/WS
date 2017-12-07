@@ -41,7 +41,7 @@
 			});
 			xhro.onreadystatechange = function(){
 				if ((xhro.readyState==4)&&(xhro.status==200 )){ 
-					document.getElementById("aukeratua").innerHTML= xhro.responseText + "<input type='submit' value='Aldatu'/>";
+					document.getElementById("aukeratua").innerHTML= xhro.responseText + "<input type='submit' name='aldatuB' value='Aldatu'/> <input type='submit' name='ezabatuB' value='Ezabatu'/>";
 					$("#aukeratua").slideDown();
 				}
 			}
@@ -93,8 +93,9 @@
 		// Zein galdera aldatu nahi den aukeratzeko.
 		$testua=mysqli_query($link, "select * from questions");
 				echo '<select id="testua" name="testua">';
+				echo '<option>Aukeratu galdera bat</option>';
 		while ($row = mysqli_fetch_array($testua)){
-			echo '<option>'. $row['testua'];
+			echo '<option>'. $row['testua'] . '</option>';
 		}
 	?>
 		</select>

@@ -50,82 +50,35 @@
    
    <body>
    <?php
-		//session_start();
-		include 'dbconfig.php';
-		
-		$posta=$_SESSION['mail'];
-		$posta = test_input($posta);
-		
-		if(!isset($posta) && empty($posta))
-			echo "<script> window.location.assign('../html/layout.html');</script>";
+	include 'dbconfig.php';	
+	$posta=$_SESSION['mail'];
+	$posta = test_input($posta);
+	
+	if(!isset($posta) && empty($posta))
+		echo "<script> window.location.assign('layout.php');</script>";
 
-		// Konprobatu erabiltzailea ikasle moduan kautotuta dagoela.
-		segurtasunaIkaslea();
+	// Konprobatu erabiltzailea ikasle moduan kautotuta dagoela.
+	segurtasunaIkaslea();
 
-		// Konprobatu erabiltzailea datu basean dagoen.
-		$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
-		$sql="SELECT * FROM erabiltzaileak WHERE posta = '$posta'";
-		if($ema=mysqli_query($link, $sql)){
-			$dago=mysqli_num_rows($ema);
-			mysqli_close($link); // Konexioa itxi
-			if($dago==0){ // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
-				echo "<script> alert('Erabiltzailea ez dago erregistratuta') </script>";
-				echo "<script> window.location.assign('../html/layout.html');</script>"; 
-			}
-			mysqli_free_result($ema);
+	// Konprobatu erabiltzailea datu basean dagoen.
+	$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
+	$sql="SELECT * FROM erabiltzaileak WHERE posta = '$posta'";
+	if($ema=mysqli_query($link, $sql)){
+		$dago=mysqli_num_rows($ema);
+		mysqli_close($link); // Konexioa itxi
+		if($dago==0){ // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
+			echo "<script> alert('Erabiltzailea ez dago erregistratuta') </script>";
+			echo "<script> window.location.assign('layout.php');</script>"; 
 		}
-		function test_input($data) {
-			$data = trim($data);
-			$data = stripslashes($data);
-			$data = htmlspecialchars($data);
-			return $data;
-		}
-	?>
-		<div id='page-wrap'>
-		<header class='main' id='h1'>
-			<div class="right">
-				<span><a href="logOut.php">LogOut</a> </span>
-				<span> Hello <?php echo $posta; ?> :)</span>
-			</div>
-			<h2>Quiz: crazy questions</h2>
-		</header>
-		<nav class='main' id='n1' role='navigation'>
-			<span><a href='layout.php'>Home</a></span>
-			<span><a href='/quizzes'>Quizzes</a></span>
-			<span><a href='handlingQuizes.php'>Handle a Quizz</a></span>
-			<span><a href='addQuestionWithImage.php'>Add Question</a></span>
-			<span><a href='showQuestionsWithImages.php'>Show Questions</a></span>
-			<span><a href='credits.php'>Credits</a></span>
-		</nav>
-		<section class="main" id="s1">
-			<form id="galderaF" name="galderenF" method="post" enctype="multipart/form-data">
-				<p>Posta:</p>
-				<?php echo $posta;?>
-				<p>Galderaren testua:</p>
-				<input type="text" id="testua" name="testua"  />
-				<p>Erantzun zuzen bat</p>
-				<input type="text" id="eZuzen" name="eZuzen"  />
-				<p>Erantzun okerra bat</p>
-				<input type="text" id="eOker1" name="eOker1"  />
-				<p>Beste erantzun oker bat</p>
-				<input type="text" id="eOker2" name="eOker2"  />
-				<p>Beste erantzun oker bat</p>
-				<input type="text" id="eOker3" name="eOker3"  />
-				<p>Galderaren zaitasuna</p>
-				<input type="range" name="zailtasun" id="zailtasun" min="1" max="5"  />
-				<span id="zailZenb"></span>
-				<p>Galderaren gai-arloa</p>
-				<input type="text" id="gaiarloa" name="gaiarloa"  />
-				<p class="argazkia"><label for="argazkia"> Galderaren irudia: </label>
-				<input type="file" id="argazkia" name="argazkia"/>
-				</p>
-				<img id="ikusiarg" src="" width="300px">
-				<br>
-				<input type="reset" id="reset" name="reset" value="Reset">
-				<input type="submit" id="bidali" name="bidali" value="Bidali"/>
-			</form>
-	<?php
-	include 'dbconfig.php';
+		mysqli_free_result($ema);
+	}
+	function test_input($data) {
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data);
+		return $data;
+	}
+	
 	if(isset($_POST['bidali']))
 	{	
 		if(isset($posta) && empty($posta)){
@@ -170,7 +123,6 @@
 			$ema = mysqli_query($link, $sql);
 			if(!$ema){
 				echo "Errorea query-a gauzatzerakoan: " . mysqli_error($link);
-				echo "<a href='../html/addQuestionHTML5.html'>Berriro saiatu</a>";
 			}else {
 				$nquestion = $xml->addChild('assessmentItem');
 				$nquestion->addAttribute('complexity', $_POST['zailtasun']);
@@ -189,7 +141,7 @@
 				//echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showXMLQuestions.php'>hemen</a></p>" ;
 				//echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='../xml/questionsTransAuto.xml'>hemen</a></p>" ;
 				// echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showXMLQuestions.php'>hemen</a></p>" ;
-				ondoTxertatua();
+				//ondoTxertatua();
 			}
 		} else { // Argazkia ez bada sartzen
 			$sql="INSERT INTO questions(posta, testua, eZuzen, eOker1, eOker2, eOker3, zailtasun, gaiarloa) VALUES ('$posta', '$testua', '$_POST[eZuzen]', '$_POST[eOker1]', '$_POST[eOker2]', '$_POST[eOker3]', '$_POST[zailtasun]', '$_POST[gaiarloa]')";
@@ -197,7 +149,6 @@
 			$ema = mysqli_query($link, $sql);
 			if(!$ema){
 				echo "Errorea query-a gauzatzerakoan: " . mysqli_error($link);
-				echo "<a href='../html/addQuestionHTML5.html'>Berriro saiatu</a>";
 			}else {
 				$nquestion = $xml->addChild('assessmentItem');
 				$nquestion->addAttribute('complexity', $_POST['zailtasun']);
@@ -216,7 +167,7 @@
 				// echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='showXMLQuestions.php'>hemen</a></p>" ;
 				// echo  "<p> Galdera guztiak ikusi ditzazkezu <a href='../xml/questionsTransAuto.xml'>hemen</a></p>" ;
 				// echo  "<p> Galdera guztiak ikusi ditzazkezu taula moduan <a href='showXMLQuestions.php'>hemen</a></p>" ;
-				ondoTxertatua();
+				//ondoTxertatua();
 			}
 		}
 		mysqli_close($link); // Konexioa itxi
@@ -230,13 +181,6 @@
 	}
 	
 	?>
-		</section>
-		<footer class='main' id='f1'>
-			<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
-			<a href='https://github.com/begosustatx/WS'>Link GITHUB</a>
-		</footer>
-		
- 
 
  </body>
 </html>

@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>Add Question</title>
+	<title>Handling Quizes</title>
     <link rel='stylesheet' type='text/css' href='../stylesPWS/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
@@ -65,26 +65,24 @@
 		}
 		function galderaGehitu(){
 			var xhro = new  XMLHttpRequest;
-			var email;
-			var testua=document.getElementById('testua').value;
 			var gaiarloa=document.getElementById('gaiarloa').value;
 			var zailtasun=document.getElementById('zailtasun').value;
 			var eZuzen=document.getElementById('eZuzen').value;
 			var eOker1=document.getElementById('eOker1').value;
 			var eOker2=document.getElementById('eOker2').value;
 			var eOker3=document.getElementById('eOker3').value;
+			var argazkia=document.getElementById('argazkia').value;
+			var formData = new FormData();
 			ruta="addQuestionAJAX.php";
-			email= "email="+getVariableFromQuery('email');
-			console.log("Email: "+ email);
-			envio1="testua="+testua;
-			envio2="gaiarloa="+gaiarloa;
-			envio3="zailtasun="+zailtasun;
-			envio4="eZuzen="+eZuzen;
-			envio5="eOker1="+eOker1;
-			envio6="eOker2="+eOker2;
-			envio7="eOker3="+eOker3;
-			url=ruta+"?"+email+"&"+envio1+"&"+envio2+"&"+envio3+"&"+envio4+"&"+envio5+"&"+envio6+"&"+envio7;
-			xhro.onreadystatechange = function(){
+			formData.append("testua", $('#testua').val());
+			formData.append("gaiarloa", $('#gaiarloa').val());
+			formData.append("zailtasun", $('#zailtasun').val());
+			formData.append("eZuzen", $('#eZuzen').val());
+			formData.append("eOker1", $('#eOker1').val());
+			formData.append("eOker2", $('#eOker2').val());
+			formData.append("eOker3", $('#eOker3').val());
+			formData.append("argazkia", $('#argazkia')[0].files[0]);
+			/*xhro.onreadystatechange = function(){
 				console.log("Gehituren status: "+xhro.readyState);
 				if ((xhro.readyState==4)&&(xhro.status==200 )){
 					document.getElementById("galderaGehitu").innerHTML= xhro.responseText;
@@ -92,10 +90,30 @@
 					document.getElementById("galderaGehitu").innerHTML = "<img src='../img/loading.gif' width=50px>";
 			};
 			xhro.open("GET",url, true);
-			xhro.send();
+			xhro.send();*/
+			$.ajax({
+				type: 'POST',
+				url: ruta,
+				data: formData,
+				contentType: false,
+				processData: false,
+				cache: false,
+				success: function(result){
+					document.getElementById("galderaGehitu").innerHTML = result;
+					// console.log(result);
+				},
+				error: function(error){
+					document.getElementById("galderaGehitu").innerHTML = error;
+					// console.log(error);
+				},
+				beforeSend: function(){
+					document.getElementById("galderaGehitu").innerHTML = "<img src='../img/loading.gif' width=50px>";
+					console.log('Galdera bidali da.');
+				}
+			});
 	}
 	
-	
+	/*
 	function getVariableFromQuery(variable){
 		var query = window.location.search.substring(1);
 		var vars = query.split("&");
@@ -108,7 +126,7 @@
 		var pair = vars[0].slice(i+1);
 		// console.log("pair: "+pair);
 		return pair;
-		}
+		}*/
 		
 		function startFunction(){
 			// console.log("Hasierako funtzio barruan.");
@@ -117,8 +135,7 @@
 		
 		function kopurua(){
 			var xhro = new  XMLHttpRequest;
-			var email = "email=" + getVariableFromQuery('email');
-			var url = "kontatuGalderakAJAX.php?"+email;
+			var url = "kontatuGalderakAJAX.php";
 			
 			xhro.onreadystatechange = function(){
 				// console.log("Kopuruaren status: "+xhro.readyState);
@@ -129,11 +146,6 @@
 			};
 			xhro.open("GET",url, true);
 			xhro.send();
-			// $('#galderaKop').html('<div><img src="../img/loading.gif" width="50px"/></div>');
-			// var jqxhr=$.get("kontatuGalderak.php", {email: email}, function(datuak, status){
-																// if(status="success")
-																	// $('#galderaKop').fadeIn().html(datuak);
-															// });
 		}
 </script>
    
@@ -187,6 +199,7 @@
 			<span><a href='/quizzes'>Quizzes</a></span>
 			<span><a href='handlingQuizes.php'>Handle a Quizz</a></span>
 			<span><a href='credits.php'>Credits</a></span>
+			<span><a href='pasahitzaAldatu.php'>Change your password</a></span>
 		</nav>
 		<section class="main" id="s1">
 			Zure galderak /  Galdera guztira
@@ -194,7 +207,7 @@
 			<div id="galderaKop"></div>
 			<form id="galderaF" name="galderenF" method="post" enctype="multipart/form-data">
 				<p>Posta:</p>
-				<?php echo $posta;?>
+				<span id='email'><?php echo $posta;?></span>
 				<p>Galderaren testua:</p>
 				<input type="text" id="testua" name="testua"  />
 				<p>Erantzun zuzen bat</p>
@@ -207,7 +220,7 @@
 				<input type="text" id="eOker3" name="eOker3"  />
 				<p>Galderaren zaitasuna</p>
 				<input type="range" name="zailtasun" id="zailtasun" min="1" max="5"  />
-				<span id="zailZenb"></span>
+				<span id="zailZenb">3</span>
 				<p>Galderaren gai-arloa</p>
 				<input type="text" id="gaiarloa" name="gaiarloa"  />
 				<p class="argazkia"><label for="argazkia"> Galderaren irudia: </label>

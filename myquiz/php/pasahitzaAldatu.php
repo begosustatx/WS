@@ -40,9 +40,9 @@
   <body>
 	<form method="post" id="signUp" name="signUp" >
 		
-		Password zaharra: <input type="password" name="passZaha" id="pass"/><br> 
-		Password berria : <input type="password" name="pass" id="pass"/><br> 
-		Password-a errepikatu: <input type="password" name="pass2" /><br>
+		Old password: <input type="password" name="passZaha" id="pass"/><br> 
+		New password: <input type="password" name="pass" id="pass"/><br> 
+		Reply the new password: <input type="password" name="pass2" /><br>
 		
 		<div id="pasahitza"></div><br>
 		<input type="submit" id="bidali" name="bidali" value="Gorde"/>

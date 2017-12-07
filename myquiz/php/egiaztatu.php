@@ -1,7 +1,7 @@
 <?php
 require_once('lib/nusoap.php');
 require_once('lib/class.wsdlcache.php');
-$ns="http://localhost:1234/Lab/Lab5/php/egiaztatu.php?wsdl";
+$ns="http://localhost:1234/WS/myquiz/php/egiaztatu.php?wsdl";
 $server = new soap_server;
 $server->configureWSDL('egiaztatu',$ns);
 $server->wsdl->schemaTargetNamespace=$ns;

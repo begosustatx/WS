@@ -13,6 +13,9 @@
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
+	<style>
+		td {padding: 10px;}
+	</style>
   </head>
   
   <body>
@@ -20,31 +23,28 @@
 
 	include 'dbconfig.php';
 	
-	
-	$posta=$_SESSION['mail'];
-	
-	if(!isset($posta) && empty($posta))
-		echo "<script> window.location.assign('../html/layout.html');</script>";
+	if(!isset($_SESSION['mail']) && empty($_SESSION['mail']))
+		echo "<script> window.location.assign('layout.php');</script>";
 
 	// Konprobatu erabiltzailea ikasle moduan kautotuta dagoela.
-	segurtasunaIkaslea();
-
-	// Konprobatu erabiltzailea datu basean dagoen.
-	$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
-	$sql="SELECT * FROM erabiltzaileak WHERE posta = '$posta'";
-	if($ema=mysqli_query($link, $sql)){
-		$dago=mysqli_num_rows($ema);
-		mysqli_close($link); // Konexioa itxi
-		if($dago==0){ // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
-			echo "<script> alert('Erabiltzailea ez dago erregistratuta') </script>";
-			echo "<script> window.location.assign('../html/layout.html');</script>"; 
+	if(segurtasunaIkaslea()==0){
+		echo "<script> window.location.assign('layout.php');</script>";
+	} else {
+		$posta=$_SESSION['mail'];
+		// Konprobatu erabiltzailea datu basean dagoen.
+		$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
+		$sql="SELECT * FROM erabiltzaileak WHERE posta = '$posta'";
+		if($ema=mysqli_query($link, $sql)){
+			$dago=mysqli_num_rows($ema);
+			mysqli_close($link); // Konexioa itxi
+			if($dago==0){ // ez bada existitzen horrelako erabiltzailerik anonimoen layout-era joan.
+				echo "<script> alert('Erabiltzailea ez dago erregistratuta') </script>";
+				echo "<script> window.location.assign('layout.php');</script>"; 
+			}
+			mysqli_free_result($ema);
 		}
-		mysqli_free_result($ema);
 	}
-	?>
-
-  <?php
-   include 'dbconfig.php';
+	
 	$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
 	if (mysqli_connect_errno()){
 		echo "Konexio hutxegitea MySQLra: " . mysqli_connect_error();
@@ -62,9 +62,5 @@
 	echo '</table>';
 	mysqli_close($link); // Konexioa itxi
   ?>
-	
-	<a href="layoutR.php?email=<?php echo $email; ?>">
-		<img src="../img/back.png" style="width:42px;height:42px;border:0;">
-	</a>
   </body>
 </html>

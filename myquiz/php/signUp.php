@@ -19,21 +19,39 @@
 			$('#posta').change(function(){
 				egiaztatuErabiltzailea($('#posta').val());
 			});
-			
+			/* Reseteatu irudia */
+			$("#reset").click(function(){
+				$("#ikusiarg").removeAttr("src");
+			});
+			/* Irudia kargatzen bada erakutsi pantailan */
+			$("#argazkia").change(function(e){
+				console.log("argazkia aldatu da.");
+				var img = e.target.files[0], imageType = /image.*/;
+				if (!img.type.match(imageType))
+					return false;
+				var reader = new FileReader();
+				reader.onload = fileOnload;
+				reader.readAsDataURL(img);
+				
+				function fileOnload(e) {
+					var result=e.target.result;
+					$("#ikusiarg").attr("src",e.target.result);
+				}
+			});
 		});
 	  </script>
   <script type="text/javascript" language = "javascript">
-	var xhro = new  XMLHttpRequest;
+	var xhre = new  XMLHttpRequest;
 	function egiaztatuErabiltzailea(email){
 		console.log("egiaztatuErabiltzaile funtzioaren barruan");
 		var url="egiaztatuE.php?email="+email;
-		xhro.open("GET",url, true);
-		xhro.send();
+		xhre.open("GET",url, true);
+		xhre.send();
 	}
-	xhro.onreadystatechange = function(){
-		console.log("ErabiltzaileE status: "+xhro.readyState);
-		if ((xhro.readyState==4)&&(xhro.status==200 )){
-			document.getElementById("erabiltzaileE").innerHTML= xhro.responseText;
+	xhre.onreadystatechange = function(){
+		console.log("ErabiltzaileE status: "+xhre.readyState);
+		if ((xhre.readyState==4)&&(xhre.status==200 )){
+			document.getElementById("erabiltzaileE").innerHTML= xhre.responseText;
 		}
 	}
   </script>
@@ -67,15 +85,16 @@
 		Password: <input type="password" name="pass" id="pass"/><br> 
 		Password-a errepikatu: <input type="password" name="pass2" /><br>
 		<div id="pasahitza"></div><br>
-		
+		<div id="erabiltzaileE"></div><br>
 		<p class="argazkia"><label for="argazkia"> Irudia: </label>
 			<input type="file" id="argazkia" name="argazkia"/>
 			</p>
 			<img id="ikusiarg" src="" width="300px">
 			<br>
 		<input type="submit" id="bidali" name="bidali" value="SignUp"/>
+		<input type="reset" id="reset" name="reset" value="Reset">
 	</form>
-	<a href="../html/layout.html">
+	<a href="layout.php">
 				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
 	</a>
 	<?php
@@ -109,7 +128,7 @@
 				echo "<script> alert('Ez zaude matrikulatuta');</script>";
 			}
 			
-			$soapclient2 = new nusoap_client('http://localhost:1234/Lab/Lab5/php/egiaztatu.php?wsdl',true);
+			$soapclient2 = new nusoap_client('http://localhost:1234/WS/myquiz/php/egiaztatu.php?wsdl',true);
 			$result2 = $soapclient2->call('egiaztatu', array('x'=>$_POST['pass']));
 			if ($result2 == 'BALIOGABEA'){
 				echo "<script> alert('Pasahitza oso ahula');</script>";
@@ -136,7 +155,7 @@
 							if(!$ema){
 								echo "<script> alert('Errorea query-a gauzatzerakoan: " . mysqli_error($link)."');</script>";
 							}else {
-								echo "<script> alert('Success. \n Going to home ...'); </script>";
+								echo "<script> alert('Success. \n Going to login ...'); </script>";
 								
 								echo "<script> window.location.assign('login.php?email=" . $_POST['posta'] . "');</script>";
 							}
@@ -151,7 +170,7 @@
 							echo "<script> alert('Errorea query-a gauzatzerakoan: " . mysqli_error($link)."');</script>";
 						}
 						else {
-							echo "<script> alert('Success. \n Going to home ...'); </script>";
+							echo "<script> alert('Success. \n Going to login ...'); </script>";
 							
 							echo "<script> window.location.assign('login.php?email=" . $_POST['posta'] . "');</script>";
 						} 
