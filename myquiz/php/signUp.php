@@ -172,7 +172,7 @@
 						else {
 							echo "<script> alert('Success. \n Going to login ...'); </script>";
 							
-							echo "<script> window.location.assign('login.php?email=" . $_POST['posta'] . "');</script>";
+							echo "<script> window.location.assign('login.php');</script>";
 						} 
 					}
 				} else 
