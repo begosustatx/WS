@@ -56,13 +56,14 @@
 			}
 				
 			$onartuak = array("image/jpg", "image/jpeg", "image/gif", "image/png");
-			if(in_array($_FILES['argazkia']['type'], $onartuak) && isset($_POST['argazkia'])){ // Argazkia igo dela konprobatzeko
+			if(in_array($_FILES['argazkia']['type'], $onartuak)){ // Argazkia igo dela konprobatzeko
 				if($_FILES['argazkia']['size'] > 4000000000){
 					echo "Argazki oso handia, ezin da igo, saiatu beste batekin.";
 				} else {
 					$img_tmp = $_FILES['argazkia']['tmp_name']; // Argazkiaren PATH.
 					$mota = $_FILES['argazkia']['type']; // Argazkiaren mota.
 					$imgData = mysqli_escape_string($link, file_get_contents($img_tmp));
+					echo '<script> console.log("Argazkia sartu behar da: '. $imgData . ' mota:' . $mota . '");</script>';
 					$sql="INSERT INTO questions(posta, testua, eZuzen, eOker1, eOker2, eOker3, zailtasun, gaiarloa, argazkia, arg_mota) VALUES ('$posta', '$_POST[testua]', '$_POST[eZuzen]', '$_POST[eOker1]', '$_POST[eOker2]', '$_POST[eOker3]', '$_POST[zailtasun]', '$_POST[gaiarloa]','$imgData', '$mota')";
 					$ema = mysqli_query($link, $sql);
 					if(!$ema){
@@ -84,6 +85,7 @@
 					}
 				}
 			} else { // Argazkia ez bada sartzen
+				echo '<script> console.log("Argazkia ez da sartu.");</script>';
 				$sql="INSERT INTO questions(posta, testua, eZuzen, eOker1, eOker2, eOker3, zailtasun, gaiarloa) VALUES ('$posta', '$_POST[testua]', '$_POST[eZuzen]', '$_POST[eOker1]', '$_POST[eOker2]', '$_POST[eOker3]', '$_POST[zailtasun]', '$_POST[gaiarloa]')";
 					
 				$ema = mysqli_query($link, $sql);

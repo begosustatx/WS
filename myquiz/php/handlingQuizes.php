@@ -20,6 +20,7 @@
 		/* Reseteatu irudia */
 			$("#reset").click(function(){
 				$("#ikusiarg").removeAttr("src");
+				$("#zailZenb").text(" 3");
 			});
 			/* Zailtasunaren zenbakia (balioa) ikuskatzeko funtzioa*/
 			$("#zailtasun").change(function(){

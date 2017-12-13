@@ -55,8 +55,9 @@
 				} else {
 					$rows_cont = $result->num_rows;
 					$aurkitua = 0;
-					if($rows_cont==0) 
+					if($rows_cont==0) {
 						echo "<script> alert('Authentication failure!') </script>";
+					}else{
 					//while($row = $result->fetch_array(MYSQLI_ASSOC)){
 						if(hash_equals($row['pasahitza'], $password)){ // Hau erabiltzea seguruagoa da.
 							$aurkitua = 1;
@@ -75,7 +76,7 @@
 							}
 							
 						}
-					//}
+					}
 					
 					$link->close(); // Konexioa itxi
 					if($aurkitua==0)
