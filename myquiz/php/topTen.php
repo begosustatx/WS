@@ -1,4 +1,3 @@
-<?php  include 'segurtasunaAnonimo.php'; $nick=$_SESSION['nick']; $_SESSION['galderak'.$nick]=null; ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -30,29 +29,29 @@
 		<span><a href='../php/credits.php'>Credits</a></span>
 	</nav>
     <section class="main" id="s1">
-
-		<span><a href='../php/onePlay.php?puntuazioa=0'>OnePlay</a></span><br>
-		<span><a href='../php/playingBySubjet.php'>Playing-by-subject</a></span><br>
+	<?php 
+		include "dbconfig.php"; 
+		$link = mysqli_connect($server, $user, $pass, $db) or die ("Error while connecting to data base.");
+		$sql="select * from anonimoak LIMIT 10";
+		$result=mysqli_query($link, $sql);
+		if(!($result))
+			echo "Error in the query" . $result->error;
+		else{
+			echo '<table border=1 style="border-collapse:collapse;background-color:#ffffff; "><tr><th> Nick-a </th><th> Puntuazioa </th></tr>';
+			while($row = mysqli_fetch_array($result)){	
+				echo '<tr><td>' . $row['nick'] . '</td><td>' . $row['puntuazioa'] . '</td></tr>';
+			}	
+			echo '</table>';	
+			mysqli_close($link);
+		}
+	?>
     </section>
 	<footer class='main' id='f1'>
 		<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
 		<a href='https://github.com/begosustatx/WS'>Link GITHUB</a>
 	</footer>
 </div>
-<?php 
-	//Puntuazioa egon bada gehituko diogu
-	$puntuazioa = $_GET['puntuazioa'];
-	
-	if($puntuazioa==1){
-		include "dbconfig.php"; 
-		$link = mysqli_connect($server, $user, $pass, $db) or die ("Error while connecting to data base.");
-		$nick=$_SESSION['nick'];
-		$sql="UPDATE anonimoak SET puntuazioa=puntuazioa+1 WHERE nick='$nick'";
-		$result=mysqli_query($link, $sql);
-		if(!($result))
-			echo "Error in the query" . $result->error;
-	}
-?>
+
 
 </body>
 </html>
