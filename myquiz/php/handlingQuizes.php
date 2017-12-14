@@ -197,7 +197,6 @@
 		</header>
 		<nav class='main' id='n1' role='navigation'>
 			<span><a href='layout.php'>Home</a></span>
-			<span><a href='/quizzes'>Quizzes</a></span>
 			<span><a href='handlingQuizes.php'>Handle a Quizz</a></span>
 			<span><a href='credits.php'>Credits</a></span>
 			<span><a href='pasahitzaAldatu.php'>Change your password</a></span>

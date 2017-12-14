@@ -31,21 +31,23 @@
 	</nav>
 <?php
 	segurtasunaAnonimo();
+	$gaia = $_GET['subject'];
 	include "dbconfig.php"; 
 	$link = mysqli_connect($server, $user, $pass, $db) or die ("Error while connecting to data base.");
 	$puntuazioa = $_GET['puntuazioa'];
 	//Aurreko galderan (egon bada) erantzun zuzena aukeratu bada, puntuazioari bat gehituko diogu
 	if($puntuazioa==1){
-
 		$link = mysqli_connect($server, $user, $pass, $db) or die ("Error while connecting to data base.");
 		$nick=$_SESSION['nick'];
+		$_SESSION['zuzenak'] = $_SESSION['zuzenak'] + 1;
 		$sql="UPDATE anonimoak SET puntuazioa=puntuazioa+1 WHERE nick='$nick'";
 		$result=mysqli_query($link, $sql);
 		if(!($result))
 			echo "Error in the query" . $result->error;
 	}
+	
 	//Galdera guztien id-ak lortu eta array batean sartuko ditugu
-	$sql="SELECT ID FROM questions";
+	$sql="SELECT ID FROM questions WHERE gaiarloa='$gaia'";
 	$result=mysqli_query($link, $sql);
 	
 	
@@ -61,7 +63,7 @@
 			if($rows_cont>0){
 				while ($row = $result->fetch_assoc()) {
 					array_push($idak, $row['ID']);
-
+					
 				}
 			}
 			//Galderen id-ak aleatorioki ordenatu
@@ -72,10 +74,11 @@
 			if (empty($_SESSION['galderak'.$nick])) {
 				$_SESSION['galderak'.$nick] = array();
 			}
+			
 			//Konprobatu galdera guztiak erantzun ditugun $_SESSION['galderak'.$nick] egindako galderen id-ak gordetzen goaz 
-			else if(count($_SESSION['galderak'.$nick])==count($idak)){
+			else if(count($_SESSION['galderak'.$nick])==3){
 				echo "<script> alert('Galdera guztiak erantzun dituzu');
-						window.location.assign('../php/quizzes2.php?puntuazioa=0');</script>";
+						window.location.assign('finished.php?puntuazioa=0');</script>";
 				//Galdera guztiak erantzun baditugu array-a null-era jarri eta onePlay-etik aterako gara
 				 $_SESSION['galderak'.$nick]=null;
 			}
@@ -143,19 +146,19 @@
 				if (window.confirm('Zorionak zure erantzuna zuzena da! Galdera gehiago erantzun nahi dituzu?') == true) {
 					puntuazioa = 1;
 					//Hurrengo orrialdean puntuazioa gehituko diogu
-					window.location.assign('../php/oneplay.php?puntuazioa=1');
+					window.location.assign('playbysubject.php?puntuazioa=1&subject=<?php echo $gaia;?>');
 
 				}
 				else
-					window.location.assign('../php/quizzes2.php?puntuazioa=1');
+					window.location.assign('quizzes2.php?puntuazioa=1');
 			}
 			
 			else{
 				if (window.confirm('Oh..Zure erantzuna okerra da! Galdera gehiago erantzun nahi dituzu?') == true) {
-					window.location.assign('../php/oneplay.php?puntuazioa=0');
+					window.location.assign('playbysubject.php?puntuazioa=0&subject=<?php echo $gaia;?>');
 				}
 				else
-					window.location.assign('../php/quizzes2.php?puntuazioa=0');
+					window.location.assign('quizzes2.php?puntuazioa=0');
 			}
 
 			
@@ -177,6 +180,7 @@
 			<input type="radio" id="erantzuna" name="erantzuna" value=<?php echo $erantzunak[1];?> /><?php echo $erantzunak[1];?> <br>
 			<input type="radio" id="erantzuna" name="erantzuna" value=<?php echo $erantzunak[2];?> /><?php echo $erantzunak[2];?> <br>
 			<input type="radio" id="erantzuna" name="erantzuna" value=<?php echo $erantzunak[3];?> /><?php echo $erantzunak[3];?> <br><br>
+			
 			<input type="button" id="bidali" name="bidali" onclick="javascript:konprobatu()" value="Bidali"/>
 			<a href="quizzes2.php?puntuazioa=0'">
 				<img src="../img/back.png" style="width:42px;height:42px;border:0;">

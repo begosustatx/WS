@@ -1,4 +1,4 @@
-<?php  include 'segurtasunaAnonimo.php'; $nick=$_SESSION['nick']; $_SESSION['galderak'.$nick]=null; ?>
+<?php  include 'segurtasuna.php'; segurtasunaAnonimo(); $nick=$_SESSION['nick']; $_SESSION['galderak'.$nick]=null; $_SESSION['zuzenak']=0;?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -13,6 +13,16 @@
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
+	<style>
+		.play {
+			background-color: #6699ff;
+			color: white;
+			padding: 14px 25px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+		}
+	</style>
   </head>
   <body>
   <div id='page-wrap'>
@@ -31,8 +41,8 @@
 	</nav>
     <section class="main" id="s1">
 
-		<span><a href='../php/onePlay.php?puntuazioa=0'>OnePlay</a></span><br>
-		<span><a href='../php/playingBySubjet.php'>Playing-by-subject</a></span><br>
+		<a class="play" href='onePlay.php?puntuazioa=0'>OnePlay</a>
+		<a class="play" href='quizesbysubject.php'>Play by subject</a>
     </section>
 	<footer class='main' id='f1'>
 		<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
@@ -42,9 +52,8 @@
 <?php 
 	//Puntuazioa egon bada gehituko diogu
 	$puntuazioa = $_GET['puntuazioa'];
-	
 	if($puntuazioa==1){
-		include "dbconfig.php"; 
+		include "dbconfig.php";
 		$link = mysqli_connect($server, $user, $pass, $db) or die ("Error while connecting to data base.");
 		$nick=$_SESSION['nick'];
 		$sql="UPDATE anonimoak SET puntuazioa=puntuazioa+1 WHERE nick='$nick'";

@@ -12,11 +12,17 @@
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
+	<style>
+		div {
+			text-align: center;
+			padding: 50px 50px 50px 50px;
+		}
+	</style>
    </head>
    <body>
    <div>
 		<p>Hautatu dauden gaietatik:<p>
-		<form>
+		<form id="gaiF" name="gaiF" method="get" action="playbysubject.php">
 			<select name="subject" id="subject">
 			<option>Select a subject</option>
 		<?php
@@ -33,6 +39,7 @@
 			}
 		?>
 			</select>
+			<input type="hidden" name="puntuazioa" value="0">
 			<input type="submit" value="Play"/>
 		</form>
 	</div>

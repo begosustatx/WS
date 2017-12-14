@@ -43,6 +43,8 @@
 	}	
   ?>
 	<div id='page-wrap'>
+		<?php // Ikaslearen rola
+		if($erregistratua==1){ ?>
 		<header class='main' id='h1'>
 			<div class="right">
 				<span><a href="logOut.php?email=<?php echo $email; ?>">LogOut</a> </span>
@@ -50,24 +52,39 @@
 			</div>
 			<h2>Quiz: crazy questions</h2>
 		</header>
-		<?php if($erregistratua==1){ ?>
 		<nav class='main' id='n1' role='navigation'>
 			<span><a href='layout.php'>Home</a></span>
-			<span><a href='/quizzes'>Quizzes</a></span>
 			<span><a href='handlingQuizes.php'>Handle a Quizz</a></span>
 			<span><a href='credits.php'>Credits</a></span>
+			<span><a href='pasahitzaAldatu.php'>Change your password</a></span>
 		</nav>
-		<?php } else if($erregistratua==0) {?>
+		<?php // Anonimoen rola
+		} else if($erregistratua==0) {?>
+		<header class='main' id='h1'>
+			<div class="right">
+				  <span><a href="login.php">LogIn</a> </span>
+				  <span><a href="signUp.php">SingUp</a> </span>
+				  <span>Anonymous</span>
+				</div>
+			<h2>Quiz: crazy questions</h2>
+		</header>
 			<nav class='main' id='n1' role='navigation'>
 				<span><a href='layout.html'>Home</a></span>
-				<span><a href='/quizzes'>Quizzes</a></span>
+				<span><a href='quizzes.php'>Quizzes</a></span>
 				<span><a href='credits.php'>Credits</a></span>
-				<span><a href='pasahitzaAldatu.php'>Change your password</a></span>
+				
 			</nav>
-		<?php } else if($erregistratua==2){?>
+		<?php // Irakaslearen rola.		
+		} else if($erregistratua==2){?>
+		<header class='main' id='h1'>
+			<div class="right">
+				<span><a href="logOut.php?email=<?php echo $email; ?>">LogOut</a> </span>
+				<span> Hello <?php echo $email; ?> :)</span>
+			</div>
+			<h2>Quiz: crazy questions</h2>
+		</header>
 			<nav class='main' id='n1' role='navigation'>
 				<span><a href='layout.php'>Home</a></span>
-				<span><a href='/quizzes'>Quizzes</a></span>
 				<span><a href='reviewingQuizes.php'>Review a Quizz</a></span>
 				<span><a href='credits.php'>Credits</a></span>
 			</nav>

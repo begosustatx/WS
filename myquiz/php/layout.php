@@ -17,6 +17,7 @@
   
   <body>
 	<?php
+
 	include 'dbconfig.php';
 	
 	
@@ -26,6 +27,7 @@
 		$aurkitua=0;
 	} else 
 		$posta=$_SESSION['mail'];
+
 	
 	if($aurkitua==-1){
 		// Konprobatu erabiltzailea datu basean dagoen.
@@ -86,7 +88,6 @@
 			</header>
 			<nav class='main' id='n1' role='navigation'>
 				<span><a href='layout.php'>Home</a></span>
-				<span><a href='quizzes.php'>Quizzes</a></span>
 				<span><a href='reviewingQuizes.php'>Review a Quizz</a></span>
 				<span><a href='credits.php'>Credits</a></span>
 			</nav>

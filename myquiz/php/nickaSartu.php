@@ -65,6 +65,7 @@
 						
 					} 
 				} 
+				
 				if($erabilKonprobatu==true){
 					
 					$sql="INSERT INTO anonimoak VALUES ('$_POST[nick]', '0')";
@@ -75,7 +76,7 @@
 						}
 						else {
 							$_SESSION['nick']=$_POST['nick'];
-							echo "<script> window.location.assign('quizzes2.php?puntuazioa=0'');</script>";
+							echo "<script> window.location.assign('quizzes2.php?puntuazioa=0');</script>";
 						} 
 				}
 				else{
