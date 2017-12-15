@@ -178,7 +178,7 @@
 			<input type="radio" id="erantzuna" name="erantzuna" value=<?php echo $erantzunak[2];?> /><?php echo $erantzunak[2];?> <br>
 			<input type="radio" id="erantzuna" name="erantzuna" value=<?php echo $erantzunak[3];?> /><?php echo $erantzunak[3];?> <br><br>
 			<input type="button" id="bidali" name="bidali" onclick="javascript:konprobatu()" value="Bidali"/>
-			<a href="quizzes2.php?puntuazioa=0'">
+			<a href="quizzes2.php?puntuazioa=0">
 				<img src="../img/back.png" style="width:42px;height:42px;border:0;">
 			</a>
 

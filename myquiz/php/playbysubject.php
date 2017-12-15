@@ -1,4 +1,4 @@
-<?php include 'segurtasuna.php' ?>
+<?php include 'segurtasuna.php'; ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -79,10 +79,10 @@
 			else if(count($_SESSION['galderak'.$nick])==3){
 				echo "<script> alert('Galdera guztiak erantzun dituzu');
 						window.location.assign('finished.php?puntuazioa=0');</script>";
-				//Galdera guztiak erantzun baditugu array-a null-era jarri eta onePlay-etik aterako gara
-				 $_SESSION['galderak'.$nick]=null;
-			}
-			else{
+			} else if(count($_SESSION['galderak'.$nick])==count($idak)){
+				echo "<script> alert('Galdera guztiak erantzun dituzu');
+						window.location.assign('finished.php?puntuazioa=0');</script>";
+			}else{
 				
 				$i=0;
 				$bukatu=false;
@@ -94,7 +94,8 @@
 			}
 			//Erantzungo dugun galderaren id-a gordekoa dugu
 			array_push($_SESSION['galderak'.$nick], $id);
-
+			print_r($_SESSION['galderak'.$nick]);
+			
 			//Galdera hori datu basera eskatu
 			$sql="SELECT * FROM questions WHERE ID='$id'";
 			$result=mysqli_query($link, $sql);
