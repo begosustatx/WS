@@ -103,6 +103,7 @@
 		<form id="aukeratua" method="post" enctype="multipart/form-data" action="aktualizatu.php">
 		</form>
 		</div>
+		<div style="overflow-x: auto;">
 	<?php
 		// Galdera guztien taula:
 		$galderak=mysqli_query($link, "select * from questions");
@@ -117,6 +118,7 @@
 		echo '</table></div>';
 		mysqli_close($link); // Konexioa itxi
 	?>
+		</div>
 	<a href="layout.php">
 		<img src="../img/back.png" style="width:42px;height:42px;border:0;">
 	</a>

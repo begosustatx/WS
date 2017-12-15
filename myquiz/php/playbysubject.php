@@ -144,22 +144,14 @@
 			eran=elementuak[i].value;
 			if(eran==erantzuna){
 
-				if (window.confirm('Zorionak zure erantzuna zuzena da! Galdera gehiago erantzun nahi dituzu?') == true) {
 					puntuazioa = 1;
 					//Hurrengo orrialdean puntuazioa gehituko diogu
 					window.location.assign('playbysubject.php?puntuazioa=1&subject=<?php echo $gaia;?>');
 
-				}
-				else
-					window.location.assign('quizzes2.php?puntuazioa=1');
-			}
-			
-			else{
-				if (window.confirm('Oh..Zure erantzuna okerra da! Galdera gehiago erantzun nahi dituzu?') == true) {
+			} else {
+				
 					window.location.assign('playbysubject.php?puntuazioa=0&subject=<?php echo $gaia;?>');
-				}
-				else
-					window.location.assign('quizzes2.php?puntuazioa=0');
+				
 			}
 
 			

@@ -13,6 +13,24 @@
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
+	<style>
+		.play {
+			background-color: #6699ff;
+			color: white;
+			padding: 14px 25px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+		}
+		.topten {
+			background-color: #f44b42;
+			color: white;
+			padding: 14px 25px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+		}
+	</style>
   </head>
   <body>
   <div id='page-wrap'>
@@ -33,8 +51,8 @@
 	</nav>
     <section class="main" id="s1">
 
-		<span><a href='../php/nickaSartu.php'>Jolastu</a></span><br>
-		<span><a href='../php/topTen.php'>Top 10 Quizers</a></span><br>
+		<span><a class="play" href='../php/nickaSartu.php'>Jolastu</a></span>
+		<span><a class="topten" href='../php/topTen.php'>Top 10 Quizers</a></span><br>
     </section>
 	<footer class='main' id='f1'>
 		<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>

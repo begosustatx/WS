@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>Quizzes</title>
+	<title>Finish</title>
     <link rel='stylesheet' type='text/css' href='../stylesPWS/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 

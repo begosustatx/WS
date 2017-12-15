@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>Quizzes</title>
+	<title>Top 10 Quizers</title>
     <link rel='stylesheet' type='text/css' href='../stylesPWS/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
@@ -12,6 +12,30 @@
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
+  <script type="text/javascript" language = "javascript">
+	function startFunction(){
+			// console.log("Hasierako funtzio barruan.");
+			setInterval(topten, 20000);
+		}
+	function topten(){
+			var xhro = new  XMLHttpRequest;
+			var url = "topTenTaula.php";
+			
+			xhro.onreadystatechange = function(){
+				// console.log("Taularen status: "+xhro.readyState);
+				if ((xhro.readyState==4)&&(xhro.status==200 )){
+					document.getElementById("taula").innerHTML= xhro.responseText;
+				} else 
+					document.getElementById("taula").innerHTML = "<img src='../img/loading.gif' width=50px>";
+			};
+			xhro.open("GET",url, true);
+			xhro.send();
+		}	
+  </script>
+  <style>
+	td {padding: 5px;}
+	#taula {overflow-x: auto;}
+  </style>
   </head>
   <body>
   <div id='page-wrap'>
@@ -28,7 +52,8 @@
 		<span><a href='../php/quizzes.php'>Quizzes</a></span>
 		<span><a href='../php/credits.php'>Credits</a></span>
 	</nav>
-    <section class="main" id="s1">
+    <section class="main" id="s1" >
+	<div id="taula">
 	<?php 
 		include "dbconfig.php"; 
 		$link = mysqli_connect($server, $user, $pass, $db) or die ("Error while connecting to data base.");
@@ -44,7 +69,8 @@
 			echo '</table>';	
 			mysqli_close($link);
 		}
-	?>
+	?></div>
+	<script>startFunction();</script>
     </section>
 	<footer class='main' id='f1'>
 		<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>

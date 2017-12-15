@@ -13,6 +13,30 @@
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='../stylesPWS/smartphone.css' />
+  <script type="text/javascript" language = "javascript">
+	function startFunction(){
+			// console.log("Hasierako funtzio barruan.");
+			setInterval(topten, 20000);
+		}
+	function topten(){
+			var xhro = new  XMLHttpRequest;
+			var url = "topTenTaula.php";
+			
+			xhro.onreadystatechange = function(){
+				// console.log("Taularen status: "+xhro.readyState);
+				if ((xhro.readyState==4)&&(xhro.status==200 )){
+					document.getElementById("taula").innerHTML= xhro.responseText;
+				} else 
+					document.getElementById("taula").innerHTML = "<img src='../img/loading.gif' width=50px>";
+			};
+			xhro.open("GET",url, true);
+			xhro.send();
+		}	
+  </script>
+  <style>
+	td {padding: 5px;}
+	#taula {overflow-x: auto;}
+  </style>
   </head>
   
   <body>
@@ -65,16 +89,7 @@
 				<span><a href='quizzes.php'>Quizzes</a></span>
 				<span><a href='credits.php'>Credits</a></span>
 			</nav>
-			<section class="main" id="s1">
-				<div>
-					Quizzes and credits will be displayed in this spot in future laboratories ...
-				</div>
-			</section>
-			<footer class='main' id='f1'>
-				<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
-				<a href='https://github.com/begosustatx/WS'>Link GITHUB</a>
-			</footer>
-		</div>
+			
 	<?php // Irakaslearen rola:
 	} else if($aurkitua==2){ 	 ?>
 
@@ -90,20 +105,7 @@
 				<span><a href='layout.php'>Home</a></span>
 				<span><a href='reviewingQuizes.php'>Review a Quizz</a></span>
 				<span><a href='credits.php'>Credits</a></span>
-			</nav>
-			<section class="main" id="s1">
-			
-			
-			<div>
-			Quizzes and credits will be displayed in this spot in future laboratories ...
-			</div>
-			</section>
-			<footer class='main' id='f1'>
-				<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
-				<a href='https://github.com/begosustatx/WS'>Link GITHUB</a>
-			</footer>
-		</div>
-		
+			</nav>		
 	<?php // Ikaslearen rola:
  	} else if($aurkitua==1){ ?> 
  
@@ -121,17 +123,35 @@
 				<span><a href='credits.php'>Credits</a></span>
 				<span><a href='pasahitzaAldatu.php'>Change your password</a></span>
 			</nav>
-			<section class="main" id="s1">
-			<div>
-			Quizzes and credits will be displayed in this spot in future laboratories ...
-			</div>
+	<?php } else echo "<script> window.location.assign('login.php');</script>"; ?>
+	<section class="main" id="s1">
+				<div id="topten" style="text-align: center">
+					<div id="taula">
+					<h2> Top 10 Quizers </h2>
+					<?php 
+						include "dbconfig.php"; 
+						$link = mysqli_connect($server, $user, $pass, $db) or die ("Error while connecting to data base.");
+						$sql="select * from anonimoak ORDER BY puntuazioa desc LIMIT 10";
+						$result=mysqli_query($link, $sql);
+						if(!($result))
+							echo "Error in the query" . $result->error;
+						else{
+							echo '<table border=1 style="border-collapse:collapse;background-color:#ffffff; "><tr><th> Nick-a </th><th> Puntuazioa </th></tr>';
+							while($row = mysqli_fetch_array($result)){	
+								echo '<tr><td>' . $row['nick'] . '</td><td>' . $row['puntuazioa'] . '</td></tr>';
+							}	
+							echo '</table>';	
+							mysqli_close($link);
+						}
+					?></div>
+					<script>startFunction();</script>
+				</div>
 			</section>
 			<footer class='main' id='f1'>
 				<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
 				<a href='https://github.com/begosustatx/WS'>Link GITHUB</a>
 			</footer>
 		</div>
-	<?php } else echo "<script> window.location.assign('login.php');</script>"; ?>
 </body>
 	
 </html>
