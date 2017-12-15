@@ -32,7 +32,7 @@
 	<?php 
 		include "dbconfig.php"; 
 		$link = mysqli_connect($server, $user, $pass, $db) or die ("Error while connecting to data base.");
-		$sql="select * from anonimoak LIMIT 10";
+		$sql="select * from anonimoak ORDER BY puntuazioa desc LIMIT 10";
 		$result=mysqli_query($link, $sql);
 		if(!($result))
 			echo "Error in the query" . $result->error;
