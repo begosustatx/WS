@@ -33,6 +33,13 @@
 		return $data;
 	}
 	
+	function mssql_escape($str) {
+       if(get_magic_quotes_gpc())
+        $str= stripslashes($str);
+       
+       return str_replace("'", "''", $str);
+    }
+	
 	if(isset($posta) && empty($posta)){
 		echo "Berrigorrezko eremu guztiak bete";
 		exit();
@@ -49,6 +56,15 @@
 			// Balio egokiak sartu badira XML fitxategia kargatu.
 			$xml = simplexml_load_file('../xml/questions.xml'); 
 		
+		    $posta=mssql_escape($posta);
+		    $testua=mssql_escape($_POST['testua']);
+		    $eZuzen=mssql_escape($_POST['eZuzen']);
+		    $eOker1=mssql_escape($_POST['eOker1']);
+		    $eOker2=mssql_escape($_POST['eOker2']);
+		    $eOker3=mssql_escape($_POST['eOker3']);
+		    $zailtasun=mssql_escape($_POST['zailtasun']);
+		    $gaiarloa=mssql_escape($_POST['gaiarloa']);
+		    
 			$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
 			if (mysqli_connect_errno()){
 				echo "Konexio hutxegitea MySQLra: " . mysqli_connect_error();
@@ -64,7 +80,7 @@
 					$mota = $_FILES['argazkia']['type']; // Argazkiaren mota.
 					$imgData = mysqli_escape_string($link, file_get_contents($img_tmp));
 					echo '<script> console.log("Argazkia sartu behar da: '. $imgData . ' mota:' . $mota . '");</script>';
-					$sql="INSERT INTO questions(posta, testua, eZuzen, eOker1, eOker2, eOker3, zailtasun, gaiarloa, argazkia, arg_mota) VALUES ('$posta', '$_POST[testua]', '$_POST[eZuzen]', '$_POST[eOker1]', '$_POST[eOker2]', '$_POST[eOker3]', '$_POST[zailtasun]', '$_POST[gaiarloa]','$imgData', '$mota')";
+					$sql="INSERT INTO questions(posta, testua, eZuzen, eOker1, eOker2, eOker3, zailtasun, gaiarloa, argazkia, arg_mota) VALUES ('$posta', '$testua', '$eZuzen', '$eOker1', '$eOker2', '$eOker3', '$zailtasun', '$gaiarloa','$imgData', '$mota')";
 					$ema = mysqli_query($link, $sql);
 					if(!$ema){
 						echo "Errorea query-a gauzatzerakoan: " . mysqli_error($link);
@@ -86,7 +102,7 @@
 				}
 			} else { // Argazkia ez bada sartzen
 				echo '<script> console.log("Argazkia ez da sartu.");</script>';
-				$sql="INSERT INTO questions(posta, testua, eZuzen, eOker1, eOker2, eOker3, zailtasun, gaiarloa) VALUES ('$posta', '$_POST[testua]', '$_POST[eZuzen]', '$_POST[eOker1]', '$_POST[eOker2]', '$_POST[eOker3]', '$_POST[zailtasun]', '$_POST[gaiarloa]')";
+				$sql= "INSERT INTO questions(posta, testua, eZuzen, eOker1, eOker2, eOker3, zailtasun, gaiarloa) VALUES ('$posta', '$testua', '$eZuzen', '$eOker1', '$eOker2', '$eOker3', '$zailtasun', '$gaiarloa')";
 					
 				$ema = mysqli_query($link, $sql);
 				if(!$ema){

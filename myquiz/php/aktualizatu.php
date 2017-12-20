@@ -1,5 +1,17 @@
 <?php
-	
+	function mssql_escape($str) {
+       if(get_magic_quotes_gpc())
+        $str= stripslashes($str);
+       
+       return str_replace("'", "''", $str);
+    }
+	$testua = mssql_escape($_POST['testua']);
+	$eZuzen = mssql_escape($_POST['eZuzen']);
+	$eOker1 = mssql_escape($_POST['eOker1']);
+	$eOker2 = mssql_escape($_POST['eOker2']);
+	$eOker3 = mssql_escape($_POST['eOker3']);
+	$zailtasun = mssql_escape($_POST['zailtasun']);
+	$gaiarloa = mssql_escape($_POST['gaiarloa']);
 	include 'dbconfig.php';
 	$link = mysqli_connect($server, $user, $pass, $db); // Konexioa ireki
 	if (mysqli_connect_errno()){
@@ -13,10 +25,10 @@
 				$mota = $_FILES['argazkia']['type']; // Argazkiaren mota.
 				$imgData = mysqli_escape_string($link, file_get_contents($img_tmp));
 				echo "<script> console.log('Argazkia aldatu behar da.');</script>";
-				$aktualizatu=mysqli_query($link, "UPDATE questions SET testua='$_POST[testua]', eZuzen='$_POST[eZuzen]', eOker1='$_POST[eOker1]', eOker2='$_POST[eOker2]', eOker3='$_POST[eOker3]', zailtasun='$_POST[zailtasun]', gaiarloa='$_POST[gaiarloa]', argazkia='$imgData' WHERE ID='$_POST[ID]'");
+				$aktualizatu=mysqli_query($link, "UPDATE questions SET testua='$testua', eZuzen='$eZuzen', eOker1='$eOker1', eOker2='$eOker2', eOker3='$eOker3', zailtasun='$zailtasun', gaiarloa='$gaiarloa', argazkia='$imgData' WHERE ID='$_POST[ID]'");
 				echo "<script> window.location.assign('reviewingQuizes.php');</script>";
 		} else{
-			$aktualizatu=mysqli_query($link, "UPDATE questions SET testua='$_POST[testua]', eZuzen='$_POST[eZuzen]', eOker1='$_POST[eOker1]', eOker2='$_POST[eOker2]', eOker3='$_POST[eOker3]', zailtasun='$_POST[zailtasun]', gaiarloa='$_POST[gaiarloa]' WHERE ID='$_POST[ID]'");
+			$aktualizatu=mysqli_query($link, "UPDATE questions SET testua='$testua', eZuzen='$eZuzen', eOker1='$eOker1', eOker2='$eOker2', eOker3='$eOker3', zailtasun='$zailtasun', gaiarloa='$gaiarloa' WHERE ID='$_POST[ID]'");
 			echo "<script> window.location.assign('reviewingQuizes.php');</script>";
 		} 
 

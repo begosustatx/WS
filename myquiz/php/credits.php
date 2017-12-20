@@ -69,7 +69,7 @@
 			<h2>Quiz: crazy questions</h2>
 		</header>
 			<nav class='main' id='n1' role='navigation'>
-				<span><a href='layout.html'>Home</a></span>
+				<span><a href='layout.php'>Home</a></span>
 				<span><a href='quizzes.php'>Quizzes</a></span>
 				<span><a href='credits.php'>Credits</a></span>
 				

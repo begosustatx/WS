@@ -46,6 +46,12 @@
 
 </div>
 <?php
+	function test_input($data) {
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data);
+		return $data;
+	}
 	include "dbconfig.php"; 
 	if(isset($_POST['bidali'])){
 		if($_POST['nick']==''){
@@ -67,15 +73,16 @@
 				} 
 				
 				if($erabilKonprobatu==true){
-					
-					$sql="INSERT INTO anonimoak VALUES ('$_POST[nick]', '0')";
+					$nick = $_POST['nick'];
+					$nick = test_input($nick);
+					$sql="INSERT INTO anonimoak VALUES ('$nick', '0')";
 					$ema = mysqli_query($link, $sql);
 
 						if(!$ema){
 							echo "<script> alert('Errorea query-a gauzatzerakoan');</script>";
 						}
 						else {
-							$_SESSION['nick']=$_POST['nick'];
+							$_SESSION['nick']=$nick;
 							echo "<script> window.location.assign('quizzes2.php?puntuazioa=0');</script>";
 						} 
 				}
@@ -84,7 +91,6 @@
 					echo "<script> window.location.assign('quizzes2.php?puntuazioa=0');</script>";
 				}
 			}
-	
 		}
 			
 	}
